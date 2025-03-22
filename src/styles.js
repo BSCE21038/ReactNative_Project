@@ -153,7 +153,7 @@ export default StyleSheet.create({
     paddingHorizontal: 10,
     marginLeft: 15,
   },
-  searchInput: {flex: 1, padding: 5, color: "black"},
+  searchInput: {flex: 1, padding: 5, color: 'black'},
   categoryList: {paddingVertical: 15},
   categoryButton: {
     flexDirection: 'row',
@@ -203,5 +203,4 @@ export default StyleSheet.create({
     fontSize: 16,
     color: 'gray',
   },
-  
 });

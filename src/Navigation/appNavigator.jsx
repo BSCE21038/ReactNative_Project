@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
+import React, {useState, useEffect} from 'react';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
 
 // Import Screens
 import WelcomeScreen from '../Screens/welcomeScreen';
@@ -13,12 +13,11 @@ const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        
-            <Stack.Screen name="Welcome" component={WelcomeScreen} />
-            <Stack.Screen name="SignIn" component={SignInScreen} />
-            <Stack.Screen name="SignUp" component={SignUpScreen} />
-          <Stack.Screen name="MainApp" component={MainTabNavigator} />
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Welcome" component={WelcomeScreen} />
+        <Stack.Screen name="SignIn" component={SignInScreen} />
+        <Stack.Screen name="SignUp" component={SignUpScreen} />
+        <Stack.Screen name="MainApp" component={MainTabNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
   );

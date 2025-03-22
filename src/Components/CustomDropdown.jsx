@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import React, {useState} from 'react';
+import {View, StyleSheet} from 'react-native';
+import {Picker} from '@react-native-picker/picker';
 
-const CustomDropdown = ({ selectedValue, onValueChange }) => {
+const CustomDropdown = ({selectedValue, onValueChange}) => {
   return (
     <View style={styles.container}>
       <Picker
         selectedValue={selectedValue}
         onValueChange={onValueChange}
         style={styles.picker}
-        dropdownIconColor="black" 
-      >
+        dropdownIconColor="black">
         <Picker.Item label="Role" value="" enabled={false} color="gray" />
         <Picker.Item label="User" value="user" />
         <Picker.Item label="Organizer" value="organizer" />
@@ -22,17 +21,17 @@ const CustomDropdown = ({ selectedValue, onValueChange }) => {
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    borderColor: "black",
+    borderColor: 'black',
     borderRadius: 10,
     paddingHorizontal: 15,
     marginVertical: 10,
     width: '100%',
-    flexDirection: 'row', 
+    flexDirection: 'row',
     alignItems: 'center',
   },
   picker: {
     height: '100%',
-    width:'78%',
+    width: '78%',
     color: 'black',
   },
 });

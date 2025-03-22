@@ -14,7 +14,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 export default function SignInScreen({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigateToSignUp = useCallback(() => navigation.navigate("SignUp"), [navigation]);
+  const navigateToSignUp = useCallback(
+    () => navigation.navigate('SignUp'),
+    [navigation],
+  );
 
   return (
     <ImageBackground
@@ -30,7 +33,7 @@ export default function SignInScreen({navigation}) {
       />
 
       {/* new-Added Logo at the Top*/}
-      <Image source={require("../../assets/logo.png")} style={styles.logo1} />
+      <Image source={require('../../assets/logo.png')} style={styles.logo1} />
       <Text style={styles.mainHeading}>Welcome</Text>
 
       <CustomPressable

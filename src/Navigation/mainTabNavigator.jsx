@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Import Screens
@@ -13,8 +13,8 @@ const Tab = createBottomTabNavigator();
 const MainTabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
+      screenOptions={({route}) => ({
+        tabBarIcon: ({color, size}) => {
           let iconName;
           if (route.name === 'Home') iconName = 'home';
           else if (route.name === 'Profile') iconName = 'person';
@@ -25,12 +25,27 @@ const MainTabNavigator = () => {
         },
         tabBarActiveTintColor: '#007bff',
         tabBarInactiveTintColor: 'gray',
-      })}
-    >
-      <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-      <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
-      <Tab.Screen name="Notifications" component={NotificationsScreen} options={{ headerShown: false }} />
-      <Tab.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }} />
+      })}>
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="Notifications"
+        component={NotificationsScreen}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{headerShown: false}}
+      />
     </Tab.Navigator>
   );
 };
