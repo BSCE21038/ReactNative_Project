@@ -1,137 +1,138 @@
 import React from 'react';
-import {View, Text, Image, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  TextInput,
+  FlatList,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+  Image
+} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native';
 import styles from '../styles';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons'; 
-import CustomCard from '../Components/CustomCard'; 
 
-const meditationCategories = [
-  {
-    id: '001',
-    title: 'Basics Course',
-    imagePath: require('../../assets/Group_3.png'),
-    backgroundColor: '#8E97FD',
-  },
-  {
-    id: '002',
-    title: 'Relaxation Music',
-    imagePath: require('../../assets/Group_1.png'),
-    backgroundColor: '#FFC97E',
-  },
+// Dummy categories
+const categories = [
+  { id: '1', name: 'Art', icon: 'color-palette', color: '#FF6F61' },
+  { id: '2', name: 'Music', icon: 'musical-notes', color: '#FFD700' },
+  { id: '3', name: 'Food', icon: 'fast-food', color: '#4CAF50' },
+  { id: '4', name: 'Concert', icon: 'microphone', color: '#FF4081' },
+  { id: '5', name: 'Education', icon: 'school', color: '#03A9F4' },
+  { id: '6', name: 'Comedy', icon: 'happy', color: '#FF9800' },
 ];
 
-const recommendedSessions = [
+// Dummy upcoming events
+const upcomingEvents = [
   {
-    id: '003',
-    title: 'Focus',
-    subtext: 'MEDITATION . 3-10 MIN',
-    imagePath: require('../../assets/Group6895.png'),
-    backgroundColor: '#76C79E',
+    id: 'event1',
+    title: 'Future Fest 2025',
+    date: '24 JAN',
+    location: 'Expo Center Lahore',
+    attendees: '+20 Going',
+    image: require('../../assets/event1.png'),
   },
   {
-    id: '004',
-    title: 'Happiness',
-    subtext: 'MEDITATION . 3-10 MIN',
-    imagePath: require('../../assets/MaskGroup.png'),
-    backgroundColor: '#808AFF',
+    id: 'event2',
+    title: 'NCA Thesis Show',
+    date: '10 JUNE',
+    location: 'NCA Lahore',
+    attendees: '+20 Going',
+    image: require('../../assets/event2.jpg'),
   },
 ];
-
-// Greeting based on time
-const getGreeting = () => {
-  const hour = new Date().getHours();
-  if (hour < 12) return 'Good Morning, Afsar';
-  if (hour < 18) return 'Good Afternoon, Afsar';
-  return 'Good Evening, Afsar';
-};
 
 const HomeScreen = () => {
   const navigation = useNavigation();
 
+  const renderCategory = ({ item }) => (
+    <TouchableOpacity style={[styles.categoryButton, { backgroundColor: item.color }]}>
+      <Ionicons name={item.icon} size={22} color="#fff" />
+      <Text style={styles.categoryText}>{item.name}</Text>
+    </TouchableOpacity>
+  );
+
+  const renderEventCard = ({ item }) => (
+    <TouchableOpacity
+      style={styles.eventCard}
+      onPress={() => navigation.navigate('EventDetails', { eventId: item.id })}
+    >
+      <Image source={item.image} style={styles.eventImage} />
+      <View style={styles.eventInfo}>
+        <Text style={styles.eventDate}>{item.date}</Text>
+        <Text style={styles.eventTitle}>{item.title}</Text>
+        <Text style={styles.eventLocation}>{item.location}</Text>
+        <View style={styles.eventFooter}>
+          <FontAwesome name="users" size={16} color="#007bff" />
+          <Text style={styles.eventAttendees}>{item.attendees}</Text>
+          <TouchableOpacity>
+            <FontAwesome name="heart" size={18} color="gray" />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>{getGreeting()}</Text>
-      <Text style={styles.listDescription}>We Wish you have a good day</Text>
-      <FlatList
-        data={meditationCategories}
-        horizontal
-        keyExtractor={item => item.id}
-        renderItem={({item}) => (
-          <CustomCard {...item}
-            backgroundColor={item.backgroundColor}
-            onPress={() => navigation.navigate('CourseDetails')}
-          />
-        )}
-        showsHorizontalScrollIndicator={false}
-      />
-      <View style={styles.dailyThought}>
-        <Image
-          source={require('../../assets/Group6915.png')}
-          style={styles.dailyImage}
+      {/* Top Navigation Bar */}
+      <ImageBackground source={require('../../assets/blockScreen.png')} style={styles.topNav}>
+        <Ionicons name="menu" size={28} color="white" onPress={() => navigation.openDrawer()} />
+        <View style={styles.searchBar}>
+          <Ionicons name="search" size={20} color="gray" />
+          <TextInput placeholder="Search..." style={styles.searchInput} />
+          <TouchableOpacity>
+            <MaterialIcons name="filter-list" size={24} color="#007bff" />
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
+
+      <ScrollView>
+        {/* Categories */}
+        <FlatList
+          data={categories}
+          renderItem={renderCategory}
+          keyExtractor={(item) => item.id}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.categoryList}
         />
-        <Text style={styles.dailyTitle}>Daily Thought</Text>
-        <Text style={styles.dailySubtext}>MEDITATION . 3-10 MIN</Text>
-        <Image
-          source={require('../../assets/Group60.png')}
-          style={styles.playIcon}
+
+        {/* Upcoming Events */}
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Upcoming Events</Text>
+          <TouchableOpacity>
+            <Text style={styles.seeAll}>See All</Text>
+          </TouchableOpacity>
+        </View>
+        <FlatList
+          data={upcomingEvents}
+          renderItem={renderEventCard}
+          keyExtractor={(item) => item.id}
+          horizontal
+          showsHorizontalScrollIndicator={false}
         />
-      </View>
-      <Text style={styles.subHeading}>Recommended for you</Text>
-      <FlatList
-        data={recommendedSessions}
-        horizontal
-        keyExtractor={item => item.id}
-        renderItem={({item}) => (
-          <CustomCard
-            title={item.title}
-            subtext={item.subtext}
-            imagePath={item.imagePath}
-            backgroundColor={item.backgroundColor}
-            onPress={() => navigation.navigate('CourseDetails')}
-          />
-        )}
-        showsHorizontalScrollIndicator={false}
-      />
+
+        {/* Invite Friends Section */}
+        <TouchableOpacity style={styles.inviteCard}>
+          <Text style={styles.inviteText}>Invite your friends</Text>
+          <Text style={styles.inviteSubText}>Get a free ticket</Text>
+        </TouchableOpacity>
+
+        {/* Nearby Events */}
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Nearby You</Text>
+          <TouchableOpacity>
+            <Text style={styles.seeAll}>See All</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   );
 };
 
-// Bottom Navigation Tabs
-const Tab = createBottomTabNavigator();
-
-const MainAppNavigator = () => {
-  return (
-    <Tab.Navigator
-      screenOptions={({route}) => ({
-        headerShown: false,
-        tabBarIcon: ({color, size}) => {
-          let iconName;
-
-          if (route.name === 'Home') {
-            iconName = 'home';
-          } else if (route.name === 'Sleep') {
-            iconName = 'bed';
-          } else if (route.name === 'Meditate') {
-            iconName = 'leaf';
-          } else if (route.name === 'Music') {
-            iconName = 'musical-notes';
-          } else if (route.name === 'Profile') {
-            iconName = 'person';
-          }
-
-          return <Icon name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: '#6A5ACD',
-        tabBarInactiveTintColor: 'gray',
-      })}>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Sleep" component={() => <Text>Sleep</Text>} />
-      <Tab.Screen name="Meditate" component={() => <Text>Meditate</Text>} />
-      <Tab.Screen name="Music" component={() => <Text>Music</Text>} />
-      <Tab.Screen name="Profile" component={() => <Text>Profile</Text>} />
-    </Tab.Navigator>
-  );
-};
-
-export default MainAppNavigator;
+export default HomeScreen;

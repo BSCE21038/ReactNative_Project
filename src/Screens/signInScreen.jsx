@@ -62,7 +62,7 @@ export default function SignInScreen({navigation}) {
 
       <CustomPressable
         title="LOG IN"
-        onPress={() => navigation.navigate('MainHome')}
+        onPress={() => navigation.navigate('Home')}
       />
 
       <Text
