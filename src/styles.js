@@ -203,4 +203,14 @@ export default StyleSheet.create({
     fontSize: 16,
     color: 'gray',
   },
+  eventDescription: {
+    fontSize: 14,
+    lineHeight: 22,
+    textAlign: 'justify',
+    color: '#333',
+    marginVertical: 5,
+    paddingHorizontal: 10, // Adds padding for better readability
+  },
+
+  
 });

@@ -20,7 +20,7 @@ const categories = [
   {id: '1', name: 'Art', icon: 'color-palette', color: '#FF6F61'},
   {id: '2', name: 'Music', icon: 'musical-notes', color: '#FFD700'},
   {id: '3', name: 'Food', icon: 'fast-food', color: '#4CAF50'},
-  {id: '4', name: 'Concert', icon: 'drum', color: '#FF4081'},
+  {id: '4', name: 'Concert', icon: 'mic', color: '#FF4081'},
   {id: '5', name: 'Education', icon: 'school', color: '#03A9F4'},
   {id: '6', name: 'Comedy', icon: 'happy', color: '#FF9800'},
 ];
@@ -33,28 +33,77 @@ const allEvents = [
     date: '2025-01-24',
     category: 'Tech',
     city: 'Lahore',
-    location: 'Expo Center Lahore',
+    location: 'Expo Center, Lahore',
     attendees: '+20 Going',
+    description: `Future Fest 2025 is the largest tech and innovation event in Pakistan, bringing together visionaries from over 50 countries.  
+
+Location: Expo Center, Lahore  
+Dates: January 24 – 26, 2025  
+
+Why Attend?  
+- Experience cutting-edge technology and revolutionary ideas.  
+- Connect with global tech leaders, investors, and entrepreneurs.  
+- Explore the latest innovations in AI, startups, and digital transformation.  
+
+Supported by industry giants such as Hashoo Group, Graana, EasyPaisa, and Google Cloud, Future Fest has generated over $200M in investments and created 30,000+ jobs.  
+
+Mark your calendars and be part of the movement!`,
     image: require('../../assets/event1.png'),
   },
   {
     id: 'event2',
-    title: 'NCA Thesis Show',
-    date: '2025-04-10',
-    category: 'Art',
+    title: 'Ramazaar - Chaand Raat',
+    date: '2025-03-30',
+    category: 'Food',
     city: 'Lahore',
-    location: 'NCA Lahore',
+    location: 'Model Town Community Center, Lahore',
     attendees: '+30 Going',
+    description: `Ramazaar returns this Chaand Raat for a night filled with shopping, food, and entertainment!  
+
+Location: Model Town Community Center, Lahore  
+Dates: March 30 – 31, 2025  
+Timings: 6:00 PM – Sehri  
+
+Event Highlights:  
+- Food stalls featuring a variety of cuisines.  
+- Shopping booths with Eid essentials and trendy fashion.  
+- Gaming zone with fun activities for all ages.  
+- Art workshop by Mashghalay.  
+- Mehndi stalls for the perfect Eid look.  
+
+Join us for a festive celebration like never before!`,
     image: require('../../assets/event2.jpg'),
   },
   {
     id: 'event3',
-    title: 'Food Festival',
+    title: 'Mashion Bazaar: Chaand Raat',
     date: '2025-03-28',
-    category: 'Food',
-    city: 'Islamabad',
-    location: 'Centaurus Mall',
+    category: 'Art',
+    city: 'Lahore',
+    location: 'Lahore Polo Club',
     attendees: '+50 Going',
+    description: `Mashion Bazaar returns with a grand Chaand Raat celebration, blending fashion, food, and entertainment in a vibrant atmosphere.  
+
+Location: Lahore Polo Club  
+Dates: March 28 – 29, 2025  
+Timings: 5:00 PM – 12:00 AM  
+
+What’s in Store?  
+- 150+ vendors featuring fashion, beauty, and home décor brands.  
+- Beauty activations for makeup and skincare enthusiasts.  
+- Interactive workshops, including bouquet making and creative activities.  
+- Kids and adult zones with games and entertainment.  
+- Photo booths to capture your festival moments.  
+- Food stalls offering delicious festival treats.  
+
+Ticket Details:  
+- Both Days (28th & 29th): Rs. 1,400  
+- Single Day (28th or 29th): Rs. 750  
+- Student Discount: Rs. 650 per day  
+
+Note: Families only – No stags allowed.  
+
+Shop, eat, and celebrate at Mashion Bazaar! Mark your calendars for an unforgettable experience.`,
     image: require('../../assets/event3.webp'),
   },
 ];
@@ -132,7 +181,8 @@ const HomeScreen = () => {
   const renderEventCard = ({item}) => (
     <TouchableOpacity
       style={styles.eventCard}
-      onPress={() => navigation.navigate('EventDetails', {eventId: item.id})}>
+      onPress={() => navigation.navigate('EventDetails', {event: item})} // Send full event object
+    >
       <Image source={item.image} style={styles.eventImage} />
       <View style={styles.eventInfo}>
         <Text style={styles.eventDate}>{item.date}</Text>
