@@ -44,6 +44,14 @@ const upcomingEvents = [
     attendees: '+20 Going',
     image: require('../../assets/event2.jpg'),
   },
+  {
+    id: 'event3',
+    title: 'NCA Thesis Show',
+    date: '10 JUNE',
+    location: 'NCA Lahore',
+    attendees: '+20 Going',
+    image: require('../../assets/event3.webp'),
+  },
 ];
 
 const HomeScreen = () => {
