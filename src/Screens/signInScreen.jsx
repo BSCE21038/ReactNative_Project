@@ -62,9 +62,8 @@ export default function SignInScreen({navigation}) {
 
       <CustomPressable
         title="LOG IN"
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => navigation.navigate('MainApp')}
       />
-
       <Text
         style={styles.forgotPasswordText}
         onPress={() => console.log('Forgot Password Pressed')}>

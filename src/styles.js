@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   container: {
@@ -7,11 +7,11 @@ export default StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: '100%',
-    borderRadius:10,
+    borderRadius: 10,
   },
   loginContainer: {
     flexDirection: 'row',
-    alignItems: 'center',  
+    alignItems: 'center',
     marginTop: 20,
     justifyContent: 'center',
   },
@@ -22,91 +22,91 @@ export default StyleSheet.create({
   // },
   logo1: {
     zIndex: 3,
-    position: "absolute",
-    top:16,
-    resizeMode: "contain",
+    position: 'absolute',
+    top: 16,
+    resizeMode: 'contain',
   },
   mainHeading: {
-    zIndex:1,
+    zIndex: 1,
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop:90,
+    marginTop: 90,
   },
   loginText: {
     fontSize: 16,
-    color: "black"
+    color: 'black',
   },
   loginLink: {
     fontSize: 18,
-    color: "#5669FF",
+    color: '#5669FF',
   },
   orText: {
     fontSize: 16,
-    color: "black",
-    marginVertical: 15
+    color: 'black',
+    marginVertical: 15,
   },
   forgotPasswordText: {
     fontSize: 16,
-    color: "black",
-    marginTop: 10
+    color: 'black',
+    marginTop: 10,
   },
   privacyPolicyLink: {
     fontSize: 14,
-    marginBottom:-3,
-    color: "#5669FF",
-    fontWeight: 'bold'
+    marginBottom: -3,
+    color: '#5669FF',
+    fontWeight: 'bold',
   },
   welcomeText: {
     fontSize: 40,
-    fontWeight: "bold",
-    color: "#FFFFBA",
-    textAlign: "center",
+    fontWeight: 'bold',
+    color: '#FFFFBA',
+    textAlign: 'center',
     marginTop: 100,
   },
   button: {
     backgroundColor: '#6A5ACD',
     paddingVertical: 12,
     borderRadius: 20,
-    width: '80%', 
+    width: '80%',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
     borderWidth: 2,
-    borderColor: '#6A5ACD'
+    borderColor: '#6A5ACD',
   },
   buttonText: {
     textAlign: 'center',
     color: '#fff',
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   socialButton: {
     flexDirection: 'row',
-    backgroundColor: "black",
-    paddingHorizontal: 20, 
-    paddingVertical: 12,   
+    backgroundColor: 'black',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
     borderRadius: 10,
     width: '80%',
     height: '8%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 10
+    marginVertical: 10,
   },
   input: {
     borderWidth: 1,
-    borderColor: "black",
+    borderColor: 'black',
     padding: 12,
     borderRadius: 10,
     width: '80%',
     marginVertical: 10,
-    fontSize: 16
+    fontSize: 16,
   },
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     width: '80%',
-    marginVertical: 15
+    marginVertical: 15,
   },
   checkbox: {
     width: 20,
@@ -116,26 +116,26 @@ export default StyleSheet.create({
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 150
+    marginLeft: 150,
   },
   checkboxText: {
     fontSize: 18,
-    color: "black"
+    color: 'black',
   },
   checkedBox: {
-    backgroundColor: '#6A5ACD'
+    backgroundColor: '#6A5ACD',
   },
   checkmark: {
     color: 'white',
     fontSize: 14,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   backIcon: {
-    position: "absolute",
-    top: 50,  
+    position: 'absolute',
+    top: 50,
     left: 20,
-    zIndex: 10, 
-    color:"black",
+    zIndex: 10,
+    color: 'black',
   },
   topNav: {
     height: 120,
@@ -153,8 +153,8 @@ export default StyleSheet.create({
     paddingHorizontal: 10,
     marginLeft: 15,
   },
-  searchInput: { flex: 1, padding: 5 },
-  categoryList: { paddingVertical: 15 },
+  searchInput: {flex: 1, padding: 5, color: "black"},
+  categoryList: {paddingVertical: 15},
   categoryButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -162,15 +162,15 @@ export default StyleSheet.create({
     borderRadius: 20,
     marginHorizontal: 5,
   },
-  categoryText: { color: '#fff', marginLeft: 5, fontSize: 14 },
+  categoryText: {color: '#fff', marginLeft: 5, fontSize: 14},
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 15,
     marginVertical: 10,
   },
-  sectionTitle: { fontSize: 18, fontWeight: 'bold' },
-  seeAll: { color: '#007bff' },
+  sectionTitle: {fontSize: 18, fontWeight: 'bold'},
+  seeAll: {color: '#007bff'},
   eventCard: {
     width: 180,
     backgroundColor: '#fff',
@@ -178,13 +178,13 @@ export default StyleSheet.create({
     marginHorizontal: 10,
     overflow: 'hidden',
   },
-  eventImage: { width: '100%', height: 100 },
-  eventInfo: { padding: 10 },
-  eventDate: { fontSize: 12, color: 'gray' },
-  eventTitle: { fontSize: 16, fontWeight: 'bold' },
-  eventLocation: { fontSize: 12, color: 'gray' },
-  eventFooter: { flexDirection: 'row', alignItems: 'center', marginTop: 5 },
-  eventAttendees: { marginLeft: 5, fontSize: 12 },
+  eventImage: {width: '100%', height: 100},
+  eventInfo: {padding: 10},
+  eventDate: {fontSize: 12, color: 'gray'},
+  eventTitle: {fontSize: 16, fontWeight: 'bold'},
+  eventLocation: {fontSize: 12, color: 'gray'},
+  eventFooter: {flexDirection: 'row', alignItems: 'center', marginTop: 5},
+  eventAttendees: {marginLeft: 5, fontSize: 12},
   inviteCard: {
     backgroundColor: '#ffcc80',
     padding: 20,
@@ -192,6 +192,16 @@ export default StyleSheet.create({
     margin: 15,
     alignItems: 'center',
   },
-  inviteText: { fontSize: 16, fontWeight: 'bold' },
-  inviteSubText: { fontSize: 14 },
+  inviteText: {fontSize: 16, fontWeight: 'bold'},
+  inviteSubText: {fontSize: 14},
+  noResultsContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  noResultsText: {
+    fontSize: 16,
+    color: 'gray',
+  },
+  
 });

@@ -15,7 +15,7 @@ export default function SignUpScreen() {
   const [isChecked, setIsChecked] = useState(false);
   const [role, setRole] = useState('');
 
-  const handleSignUp = useCallback(() => navigation.navigate("Home"), [navigation]);
+  const handleSignUp = useCallback(() => navigation.navigate("MainApp"), [navigation]);
   const handleBack = useCallback(() => navigation.goBack(), [navigation]);
 
   return (
