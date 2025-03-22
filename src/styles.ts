@@ -7,7 +7,14 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    height: '100%'
+    height: '100%',
+    borderRadius:10,
+  },
+  firstScreen:{
+    padding:5,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   loginContainer: {
     flexDirection: 'row',
@@ -29,6 +36,12 @@ export default StyleSheet.create({
   logo: {
     position: "absolute",
     top: 50,
+    resizeMode: "contain",
+  },
+  logo1: {
+    zIndex: 3,
+    position: "absolute",
+    top:16,
     resizeMode: "contain",
   },
   overlay: {
@@ -80,10 +93,11 @@ export default StyleSheet.create({
   },
   // Headings & Text
   mainHeading: {
-    fontSize: 40,
+    zIndex:1,
+    fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 20
+    marginTop:90,
   },
   heading: {
     fontSize: 40,
@@ -125,27 +139,27 @@ export default StyleSheet.create({
     lineHeight: 30, 
   },
   loginText: {
-    fontSize: 18,
-    color: '#777'
+    fontSize: 16,
+    color: "black"
   },
   loginLink: {
     fontSize: 18,
-    color: '#6A5ACD',
-    fontWeight: 'bold'
+    color: "#5669FF",
   },
   orText: {
-    fontSize: 18,
-    color: 'gray',
+    fontSize: 16,
+    color: "black",
     marginVertical: 15
   },
   forgotPasswordText: {
-    fontSize: 18,
-    color: '#6A5ACD',
+    fontSize: 16,
+    color: "black",
     marginTop: 10
   },
   privacyPolicyLink: {
     fontSize: 14,
-    color: '#6A5ACD',
+    marginBottom:-3,
+    color: "#5669FF",
     fontWeight: 'bold'
   },
   welcomeText: {
@@ -267,11 +281,12 @@ export default StyleSheet.create({
   },
   socialButton: {
     flexDirection: 'row',
-    backgroundColor: '#6A5ACD',
+    backgroundColor: "black",
     paddingHorizontal: 20, 
     paddingVertical: 12,   
-    borderRadius: 20,
+    borderRadius: 10,
     width: '80%',
+    height: '8%',
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 10
@@ -314,9 +329,9 @@ export default StyleSheet.create({
   // input fields & checkboxes
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "black",
     padding: 12,
-    borderRadius: 20,
+    borderRadius: 10,
     width: '80%',
     marginVertical: 10,
     fontSize: 16
@@ -327,7 +342,6 @@ export default StyleSheet.create({
     width: '80%',
     marginVertical: 15
   },
-
   checkbox: {
     width: 20,
     height: 20,
@@ -340,7 +354,7 @@ export default StyleSheet.create({
   },
   checkboxText: {
     fontSize: 18,
-    color: '#777'
+    color: "black"
   },
   checkedBox: {
     backgroundColor: '#6A5ACD'
@@ -357,6 +371,7 @@ export default StyleSheet.create({
     top: 50,  
     left: 20,
     zIndex: 10, 
+    color:"black",
   },
   playIcon: {
     width: 30,

@@ -1,8 +1,9 @@
 import React, { useState, useCallback } from "react";
-import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
+import { View, Text, Image, ImageBackground, TouchableOpacity } from "react-native";
 import styles from "../styles";
 import CustomPressable from "../Components/CustomPressable";
 import CustomTextInput from "../Components/CustomTextInput";
+import CustomDropdown from "../Components/CustomDropdown";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 
@@ -12,13 +13,17 @@ export default function SignUpScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+  const [role, setRole] = useState('');
 
   const handleSignUp = useCallback(() => navigation.navigate("MainHome"), [navigation]);
   const handleBack = useCallback(() => navigation.goBack(), [navigation]);
 
   return (
-    <ImageBackground source={require("../../assets/signIn.png")} style={styles.container}>
+    <ImageBackground source={require("../../assets/Mask.png")} style={styles.container}>
       <Icon name="arrow-back" size={30} color="#6A5ACD" style={styles.backIcon} onPress={handleBack} />
+
+       {/* new-Added Logo at the Top*/}
+       <Image source={require("../../assets/logo.png")} style={styles.logo1} />
 
       <Text style={styles.mainHeading}>Create Your Account</Text>
 
@@ -30,6 +35,9 @@ export default function SignUpScreen() {
       <CustomTextInput value={name} onChangeText={setName} placeholder="Name" />
       <CustomTextInput value={email} onChangeText={setEmail} placeholder="Email Address" />
       <CustomTextInput value={password} onChangeText={setPassword} placeholder="Password" secureTextEntry isPassword />
+      <View>
+        <CustomDropdown selectedValue={role} onValueChange={(itemValue) => setRole(itemValue)} />
+      </View>
 
      {/* Checkbox for Privacy Policy */}
      <View style={styles.checkboxContainer}>
@@ -37,7 +45,7 @@ export default function SignUpScreen() {
           I have read the{' '}
           <TouchableOpacity
             onPress={() => console.log('Privacy Policy Clicked')}>
-            <Text style={styles.privacyPolicyLink}>Privacy Policy</Text>
+            <Text style={styles.privacyPolicyLink}> Privacy Policy</Text>
           </TouchableOpacity>
         </Text>
         <TouchableOpacity
@@ -47,7 +55,7 @@ export default function SignUpScreen() {
         </TouchableOpacity>
       </View>
 
-      <CustomPressable title="GET STARTED" onPress={handleSignUp} />
+      <CustomPressable title="SIGN UP" onPress={handleSignUp} />
     </ImageBackground>
   );
 }

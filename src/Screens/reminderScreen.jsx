@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, FlatList} from 'react-native';
+import {View, Text,TouchableOpacity, FlatList} from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import styles from '../styles';
 
@@ -7,9 +7,9 @@ const daysOfWeek = ['SU', 'M', 'T', 'W', 'TH', 'F', 'S'];
 
 const RemindersScreen = ({navigation}) => {
   const [time, setTime] = useState(new Date());
-  const [selectedDays, setSelectedDays] = useState<string[]>([]);
+  const [selectedDays, setSelectedDays] = useState([]);
 
-  const toggleDaySelection = (day: string) => {
+  const toggleDaySelection = (day) => {
     setSelectedDays(prevDays =>
       prevDays.includes(day)
         ? prevDays.filter(d => d !== day)

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   View,
   Text,
@@ -14,10 +14,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 export default function SignInScreen({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigateToSignUp = useCallback(() => navigation.navigate("SignUp"), [navigation]);
 
   return (
     <ImageBackground
-      source={require('../../assets/signIn.png')}
+      source={require('../../assets/Mask.png')}
       style={styles.container}>
       {/* Back Button */}
       <Icon
@@ -27,7 +28,10 @@ export default function SignInScreen({navigation}) {
         style={styles.backIcon}
         onPress={() => navigation.goBack()}
       />
-      <Text style={styles.mainHeading}>Welcome Back!</Text>
+
+      {/* new-Added Logo at the Top*/}
+      <Image source={require("../../assets/logo.png")} style={styles.logo1} />
+      <Text style={styles.mainHeading}>Welcome</Text>
 
       <CustomPressable
         title="CONTINUE WITH FACEBOOK"
@@ -66,6 +70,13 @@ export default function SignInScreen({navigation}) {
         onPress={() => console.log('Forgot Password Pressed')}>
         FORGOT PASSWORD?
       </Text>
+
+      <View style={styles.loginContainer}>
+        <Text style={styles.loginText}>DON'T HAVE AN ACCOUNT? </Text>
+        <TouchableOpacity onPress={navigateToSignUp}>
+          <Text style={styles.loginLink}>SIGN UP</Text>
+        </TouchableOpacity>
+      </View>
     </ImageBackground>
   );
 }

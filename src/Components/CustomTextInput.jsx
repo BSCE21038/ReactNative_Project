@@ -24,7 +24,7 @@ const CustomTextInput = ({
         placeholder={placeholder}
         secureTextEntry={isPassword ? isSecure : false}
         style={styles.input}
-        placeholderTextColor="gray"
+        placeholderTextColor="black" borderColor="black"
       />
       {isPassword && (
         <TouchableOpacity
@@ -43,8 +43,8 @@ const CustomTextInput = ({
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 20,
+    borderColor: "black",
+    borderRadius: 10,
     paddingHorizontal: 15,
     marginVertical: 10,
     width: '80%',

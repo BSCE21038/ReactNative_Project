@@ -20,10 +20,10 @@ const CustomPressable = ({title, onPress, style, textStyle, icon}) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#6A5ACD',
-    borderColor: '#6A5ACD',
+    backgroundColor: "black",
+    borderColor: "black",
     paddingVertical: 12,
-    borderRadius: 30,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
@@ -40,9 +40,8 @@ const styles = StyleSheet.create({
   },
   icon: {
     width: 25,
-    height: 30,
-    marginRight: 40,
-    marginLeft: -40,
+    height: 25,
+    marginRight: 15,
     resizeMode: 'contain',
   },
   text: {
