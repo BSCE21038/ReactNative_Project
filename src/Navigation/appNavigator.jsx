@@ -8,6 +8,7 @@ import SignInScreen from '../Screens/signInScreen';
 import SignUpScreen from '../Screens/signUpScreen';
 import MainTabNavigator from './mainTabNavigator'; // Bottom Tab Navigation
 import EventDetailScreen from '../Screens/eventDetailScreen';
+import RegistrationScreen from '../Screens/RegistrationsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,7 @@ const AppNavigator = () => {
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="MainApp" component={MainTabNavigator} />
         <Stack.Screen name="EventDetails" component={EventDetailScreen} />
+        <Stack.Screen name="Registration" component={RegistrationScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

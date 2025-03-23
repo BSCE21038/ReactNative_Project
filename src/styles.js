@@ -1,6 +1,9 @@
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
+  container1: {
+    flex:1,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -8,6 +11,7 @@ export default StyleSheet.create({
     width: '100%',
     height: '100%',
     borderRadius: 10,
+    zIndex:3,
   },
   loginContainer: {
     flexDirection: 'row',

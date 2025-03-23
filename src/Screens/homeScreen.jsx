@@ -12,6 +12,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import styles from '../styles';
 
 // Updated categories with "All"
@@ -197,7 +198,7 @@ const HomeScreen = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container1}>
       {/* Top Navigation Bar */}
       <ImageBackground
         source={require('../../assets/blockScreen.png')}

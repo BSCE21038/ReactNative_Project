@@ -13,6 +13,7 @@ const CustomTextInput = ({
   placeholder,
   secureTextEntry,
   isPassword,
+  keyboardType,
 }) => {
   const [isSecure, setIsSecure] = useState(secureTextEntry);
 
@@ -26,6 +27,7 @@ const CustomTextInput = ({
         style={styles.input}
         placeholderTextColor="black"
         borderColor="black"
+        keyboardType={keyboardType}
       />
       {isPassword && (
         <TouchableOpacity

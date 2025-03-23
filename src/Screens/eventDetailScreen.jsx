@@ -43,6 +43,13 @@ const EventDetailScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+    <Icon
+      name="arrow-back"
+      size={30}
+      color="#6A5ACD"
+      style={styles.backIcon}
+      onPress={() => navigation.goBack()}
+    />
       {/* Sticky Event Image */}
       <View style={styles.stickyImageContainer}>
         <Image source={event.image} style={styles.eventImage} />
@@ -96,7 +103,9 @@ const EventDetailScreen = ({ navigation }) => {
 
       {/* Bottom Buttons */}
       <View style={styles.bottomButtons}>
-        <TouchableOpacity style={styles.registerButton}>
+        <TouchableOpacity style={styles.registerButton} 
+        onPress={() => navigation.navigate('Registration', { event })}
+        >
           <Text style={styles.registerText}>Register Now</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.shareButton} onPress={handleShare}>
@@ -112,6 +121,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  backIcon: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    zIndex: 10,
+    color: 'black',
+    zIndex:100,
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
+    borderRadius: 20, 
   },
   stickyImageContainer: {
     position: 'absolute',

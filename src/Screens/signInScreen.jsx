@@ -67,11 +67,12 @@ export default function SignInScreen({navigation}) {
         title="LOG IN"
         onPress={() => navigation.navigate('MainApp')}
       />
-      <Text
+      {/*<Text
         style={styles.forgotPasswordText}
         onPress={() => console.log('Forgot Password Pressed')}>
         FORGOT PASSWORD?
       </Text>
+     */}
 
       <View style={styles.loginContainer}>
         <Text style={styles.loginText}>DON'T HAVE AN ACCOUNT? </Text>
