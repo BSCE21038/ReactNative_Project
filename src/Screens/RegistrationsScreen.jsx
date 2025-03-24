@@ -16,6 +16,8 @@ const RegistrationScreen = ({ route, navigation }) => {
 
   // Load available seats from AsyncStorage
   useEffect(() => {
+    if (!event?.id) return;  // Prevents undefined event.id errors
+  
     const loadAvailability = async () => {
       try {
         const storedSeats = await AsyncStorage.getItem(`availableSeats_${event.id}`);
@@ -25,9 +27,10 @@ const RegistrationScreen = ({ route, navigation }) => {
       } catch (error) {
         console.log("Error loading seat availability:", error);
       }
-    };    
+    };
+  
     loadAvailability();
-  }, []);
+  }, [event.id]);  // Added event.id as a dependency  
 
   const validateInput = (text) => {
     if (text === '') {
@@ -65,19 +68,32 @@ const RegistrationScreen = ({ route, navigation }) => {
       Alert.alert('Error', 'Please fill out all details.');
       return;
     }
-
-    const newAvailableSeats = availableSeats - Number(numSeats);
-    setAvailableSeats(newAvailableSeats);
-
+  
+    const updatedRegistrations = registrations.map((attendee, index) => ({
+      ...attendee,
+      registrationNumber: `${Date.now()}-${index}`,
+    }));
+  
     try {
-      await AsyncStorage.setItem(`availableSeats_${event.id}`, newAvailableSeats.toString());
+      const existingData = await AsyncStorage.getItem(`registeredAttendees_${event.id}`);
+      const previousRegistrations = existingData ? JSON.parse(existingData) : [];
+      
+      const newRegistrations = [...previousRegistrations, ...updatedRegistrations];
+  
+      // **Optimized: Update state before AsyncStorage to avoid UI lag**
+      setAvailableSeats(prevSeats => prevSeats - registrations.length);
+      
+      await AsyncStorage.setItem(`registeredAttendees_${event.id}`, JSON.stringify(newRegistrations));
+      await AsyncStorage.setItem(`availableSeats_${event.id}`, (availableSeats - registrations.length).toString());
+  
+      Alert.alert('Success', 'Registration was successful!', [
+        { text: 'OK', onPress: () => navigation.navigate('YourEvents', { event }) }
+      ]);           
+  
     } catch (error) {
-      console.log("Error saving seat availability:", error);
+      console.log("Error saving registration data:", error);
     }
-
-    Alert.alert('Success', 'Registration was successful!');
-    navigation.goBack();
-  };
+  };  
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

@@ -6,9 +6,12 @@ import {NavigationContainer} from '@react-navigation/native';
 import WelcomeScreen from '../Screens/welcomeScreen';
 import SignInScreen from '../Screens/signInScreen';
 import SignUpScreen from '../Screens/signUpScreen';
-import MainTabNavigator from './mainTabNavigator'; // Bottom Tab Navigation
+import MainTabNavigator from './mainTabNavigator'; 
 import EventDetailScreen from '../Screens/eventDetailScreen';
 import RegistrationScreen from '../Screens/RegistrationsScreen';
+import WishlistScreen from '../Screens/WishListScreen';
+import YourEventsScreen from '../Screens/YourEventsScreen'; 
+import AttendeeDetailsScreen from '../Screens/AttendeeDetailsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +25,9 @@ const AppNavigator = () => {
         <Stack.Screen name="MainApp" component={MainTabNavigator} />
         <Stack.Screen name="EventDetails" component={EventDetailScreen} />
         <Stack.Screen name="Registration" component={RegistrationScreen} />
+        <Stack.Screen name="Wishlist" component={WishlistScreen} />
+        <Stack.Screen name="YourEvents" component={YourEventsScreen} />
+        <Stack.Screen name="AttendeeDetails" component={AttendeeDetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
