@@ -1,29 +1,87 @@
-import React, {useState, useCallback} from 'react';
+// signInScreen.jsx
+import React, { useState, useCallback } from "react";
 import {
-  View,
   Text,
   ImageBackground,
   Image,
   TouchableOpacity,
-} from 'react-native';
-import styles from '../styles';
-import CustomPressable from '../Components/CustomPressable';
-import CustomTextInput from '../Components/CustomTextInput';
-import Icon from 'react-native-vector-icons/Ionicons';
+  Alert,
+} from "react-native";
+import styles from "../styles";
+import CustomPressable from "../Components/CustomPressable";
+import CustomTextInput from "../Components/CustomTextInput";
+import Icon from "react-native-vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/native";
+import { auth, WEB_CLIENT_ID } from "../../firebaseConfig";
+import {
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithCredential,
+  FacebookAuthProvider,
+} from "firebase/auth";
+import { GoogleSignin, statusCodes } from "@react-native-google-signin/google-signin";
+import { LoginManager, AccessToken } from "react-native-fbsdk-next";
 
-export default function SignInScreen({navigation}) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+// Configure Google Sign-In with your webClientId.
+GoogleSignin.configure({
+  webClientId: WEB_CLIENT_ID,
+});
+
+export default function SignInScreen({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigateToSignUp = useCallback(
-    () => navigation.navigate('SignUp'),
-    [navigation],
+    () => navigation.navigate("SignUp"),
+    [navigation]
   );
+
+  // Email/Password Sign-In
+  const handleEmailSignIn = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => navigation.replace("MainApp"))
+      .catch((error) => Alert.alert("Login Error", error.message));
+  };
+
+  // Google Sign-In
+  const handleGoogleSignIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      const googleCredential = GoogleAuthProvider.credential(userInfo.idToken);
+      await signInWithCredential(auth, googleCredential);
+      navigation.replace("MainApp");
+    } catch (error) {
+      Alert.alert("Google Sign-In Error", error.message);
+    }
+  };
+
+  // Facebook Sign-In
+  const handleFacebookSignIn = async () => {
+    try {
+      const result = await LoginManager.logInWithPermissions([
+        "public_profile",
+        "email",
+      ]);
+      if (result.isCancelled)
+        throw new Error("Facebook Sign-In Cancelled");
+      const data = await AccessToken.getCurrentAccessToken();
+      if (!data)
+        throw new Error("Failed to get Facebook access token");
+      const facebookCredential = FacebookAuthProvider.credential(
+        data.accessToken
+      );
+      await signInWithCredential(auth, facebookCredential);
+      navigation.replace("MainApp");
+    } catch (error) {
+      Alert.alert("Facebook Sign-In Error", error.message);
+    }
+  };
 
   return (
     <ImageBackground
-      source={require('../../assets/Mask.png')}
-      style={styles.container}>
-      {/* Back Button */}
+      source={require("../../assets/Mask.png")}
+      style={styles.container}
+    >
       <Icon
         name="arrow-back"
         size={30}
@@ -31,22 +89,20 @@ export default function SignInScreen({navigation}) {
         style={styles.backIcon}
         onPress={() => navigation.goBack()}
       />
-
-      {/* new-Added Logo at the Top*/}
-      <Image source={require('../../assets/logo.png')} style={styles.logo1} />
+      <Image source={require("../../assets/logo.png")} style={styles.logo1} />
       <Text style={styles.mainHeading}>Welcome</Text>
 
       <CustomPressable
         title="CONTINUE WITH FACEBOOK"
-        onPress={() => {}}
+        onPress={handleFacebookSignIn}
         style={styles.socialButton}
-        icon={require('../../assets/Vector.png')}
+        icon={require("../../assets/Vector.png")}
       />
       <CustomPressable
         title="CONTINUE WITH GOOGLE"
-        onPress={() => {}}
+        onPress={handleGoogleSignIn}
         style={styles.socialButton}
-        icon={require('../../assets/Group6795.png')}
+        icon={require("../../assets/Group6795.png")}
       />
 
       <Text style={styles.orText}>OR LOG IN WITH EMAIL</Text>
@@ -63,23 +119,11 @@ export default function SignInScreen({navigation}) {
         secureTextEntry
       />
 
-      <CustomPressable
-        title="LOG IN"
-        onPress={() => navigation.navigate('MainApp')}
-      />
-      {/*<Text
-        style={styles.forgotPasswordText}
-        onPress={() => console.log('Forgot Password Pressed')}>
-        FORGOT PASSWORD?
-      </Text>
-     */}
-
-      <View style={styles.loginContainer}>
+      <CustomPressable title="LOG IN" onPress={handleEmailSignIn} />
+      <TouchableOpacity onPress={navigateToSignUp} style={styles.loginContainer}>
         <Text style={styles.loginText}>DON'T HAVE AN ACCOUNT? </Text>
-        <TouchableOpacity onPress={navigateToSignUp}>
-          <Text style={styles.loginLink}>SIGN UP</Text>
-        </TouchableOpacity>
-      </View>
+        <Text style={styles.loginLink}>SIGN UP</Text>
+      </TouchableOpacity>
     </ImageBackground>
   );
 }
