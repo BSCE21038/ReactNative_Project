@@ -1,37 +1,80 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, 
   FlatList, ImageBackground, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RegistrationScreen = ({ route, navigation }) => {
   const { event } = route.params;
   
   const [availableSeats, setAvailableSeats] = useState(20);
-  const [numSeats, setNumSeats] = useState(1);
+  const [numSeats, setNumSeats] = useState('');
   const [registrations, setRegistrations] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  // Load available seats from AsyncStorage
+  useEffect(() => {
+    const loadAvailability = async () => {
+      try {
+        const storedSeats = await AsyncStorage.getItem(`availableSeats_${event.id}`);
+        if (storedSeats !== null) {
+          setAvailableSeats(parseInt(storedSeats, 10));
+        }
+      } catch (error) {
+        console.log("Error loading seat availability:", error);
+      }
+    };    
+    loadAvailability();
+  }, []);
+
+  const validateInput = (text) => {
+    if (text === '') {
+      setNumSeats('');
+      setErrorMessage('');
+      return;
+    }
+
+    const seatCount = Number(text);
+    
+    if (isNaN(seatCount) || seatCount <= 0 || seatCount > availableSeats) {
+      setErrorMessage(`Enter a valid number (1-${availableSeats})`);
+      return;
+    }
+
+    setErrorMessage('');
+    setNumSeats(text);
+  };
 
   const handleRegister = () => {
-    if (numSeats > availableSeats) {
-      Alert.alert('Error', 'Not enough seats available.');
+    if (numSeats === '' || isNaN(Number(numSeats)) || Number(numSeats) <= 0 || Number(numSeats) > availableSeats) {
+      setErrorMessage(`Enter a valid number (1-${availableSeats})`);
       return;
     }
 
     let userDetails = [];
-    for (let i = 0; i < numSeats; i++) {
+    for (let i = 0; i < Number(numSeats); i++) {
       userDetails.push({ id: i, name: '', contact: '' });
     }
     setRegistrations(userDetails);
   };
 
-  const confirmRegistration = () => {
+  const confirmRegistration = async () => {
     if (registrations.some(r => r.name === '' || r.contact === '')) {
       Alert.alert('Error', 'Please fill out all details.');
       return;
     }
 
-    setAvailableSeats(prevSeats => prevSeats - numSeats);
+    const newAvailableSeats = availableSeats - Number(numSeats);
+    setAvailableSeats(newAvailableSeats);
+
+    try {
+      await AsyncStorage.setItem(`availableSeats_${event.id}`, newAvailableSeats.toString());
+    } catch (error) {
+      console.log("Error saving seat availability:", error);
+    }
+
     Alert.alert('Success', 'Registration was successful!');
     navigation.goBack();
   };
@@ -44,7 +87,6 @@ const RegistrationScreen = ({ route, navigation }) => {
           <FlatList
             ListHeaderComponent={(
               <>
-                {/* Back Button */}
                 <View style={styles.container1}>
                   <Text style={styles.header}>Register for {"\n"}{event.title}</Text>
                   <Text style={styles.seats}>
@@ -55,10 +97,13 @@ const RegistrationScreen = ({ route, navigation }) => {
                   <TextInput
                     style={styles.input}
                     keyboardType="numeric"
-                    value={String(numSeats)}
-                    onChangeText={text => setNumSeats(Number(text))}
+                    placeholderTextColor="black"
                     placeholder="Enter Number"
+                    value={numSeats}
+                    onChangeText={validateInput}
                   />
+
+                  {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
 
                   <TouchableOpacity style={styles.proceedButton} onPress={handleRegister}>
                     <Text style={styles.proceedButtonText}>Proceed</Text>
@@ -73,7 +118,9 @@ const RegistrationScreen = ({ route, navigation }) => {
                 <Text style={styles.label}>Attendee {index + 1}</Text>
                 <TextInput
                   style={styles.input}
-                  placeholder="Name"
+                  placeholder="Full Name"
+                  placeholderTextColor="black"
+                  value={item.name}
                   onChangeText={text => {
                     let updatedList = [...registrations];
                     updatedList[index].name = text;
@@ -82,7 +129,9 @@ const RegistrationScreen = ({ route, navigation }) => {
                 />
                 <TextInput
                   style={styles.input}
+                  value={item.contact}
                   placeholder="Contact No."
+                  placeholderTextColor="black"
                   keyboardType="phone-pad"
                   onChangeText={text => {
                     let updatedList = [...registrations];
@@ -106,6 +155,7 @@ const RegistrationScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex:1,
     width: '100%',
     height: '100%',
     justifyContent: 'center', 
@@ -113,7 +163,7 @@ const styles = StyleSheet.create({
   },
   backIcon: {
     position: 'absolute',
-    top: 20, 
+    top: 18, 
     left: 20, 
     zIndex: 20, 
     backgroundColor: 'white',
@@ -140,8 +190,15 @@ const styles = StyleSheet.create({
     padding: 12,
     marginVertical: 8,
     borderRadius: 8,
-    width: "90%",
+    width: "97%",
     textAlign: "center",
+    color: "black",
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 14,
+    marginBottom: 8,
+    textAlign: 'center',
   },
   proceedButton: {
     backgroundColor: "black", 
@@ -150,7 +207,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
-    width: "90%", 
+    width: "97%", 
     marginTop: 10,
   },  
   proceedButtonText: {
@@ -165,7 +222,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    width: "90%", 
+    width: "95%", 
     marginVertical: 10,
   },
   confirmButtonText: {

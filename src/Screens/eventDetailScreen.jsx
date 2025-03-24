@@ -130,7 +130,8 @@ const styles = StyleSheet.create({
     color: 'black',
     zIndex:100,
     backgroundColor: 'rgba(255, 255, 255, 0.6)',
-    borderRadius: 20, 
+    borderRadius: 30,
+    padding:8,
   },
   stickyImageContainer: {
     position: 'absolute',
