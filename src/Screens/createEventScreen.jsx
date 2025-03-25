@@ -1,7 +1,19 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Alert,
+  StyleSheet,
+  Image,
+} from "react-native";
 import { db, auth } from "../../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import * as ImagePicker from "react-native-image-picker";
+import CustomPressable from "../Components/CustomPressable";
+
+const storage = getStorage();
 
 const CreateEventScreen = ({ navigation }) => {
   const [title, setTitle] = useState("");
@@ -9,6 +21,32 @@ const CreateEventScreen = ({ navigation }) => {
   const [date, setDate] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
+  const [imageUri, setImageUri] = useState(null);
+
+  const pickImage = async () => {
+    ImagePicker.launchImageLibrary(
+      { mediaType: "photo", quality: 1 },
+      async (response) => {
+        if (response.didCancel) return;
+        if (response.errorMessage) {
+          Alert.alert("Error", response.errorMessage);
+          return;
+        }
+        if (response.assets && response.assets.length > 0) {
+          setImageUri(response.assets[0].uri);
+        }
+      }
+    );
+  };
+
+  const uploadImage = async (uri) => {
+    if (!uri) return null;
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    const fileRef = ref(storage, `eventImages/${Date.now()}.jpg`);
+    await uploadBytes(fileRef, blob);
+    return await getDownloadURL(fileRef);
+  };
 
   const handleCreateEvent = async () => {
     if (!title || !location || !date || !category || !description) {
@@ -17,12 +55,18 @@ const CreateEventScreen = ({ navigation }) => {
     }
 
     try {
+      let imageUrl = null;
+      if (imageUri) {
+        imageUrl = await uploadImage(imageUri);
+      }
+
       await addDoc(collection(db, "events"), {
         title,
         location,
         date,
         category,
         description,
+        imageUrl,
         createdBy: auth.currentUser.uid,
       });
 
@@ -36,22 +80,35 @@ const CreateEventScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Create Event</Text>
-      
+
+      {/* Image Picker */}
+      {imageUri ? (
+        <Image source={{ uri: imageUri }} style={styles.imagePreview} />
+      ) : (
+        <CustomPressable
+          title="Upload Cover Photo"
+          onPress={pickImage}
+          style={{  width: "100%", marginBottom: 10 }}
+        />
+      )}
+
       <TextInput style={styles.input} placeholder="Event Title" value={title} onChangeText={setTitle} />
       <TextInput style={styles.input} placeholder="Location" value={location} onChangeText={setLocation} />
       <TextInput style={styles.input} placeholder="Date (YYYY-MM-DD)" value={date} onChangeText={setDate} />
       <TextInput style={styles.input} placeholder="Category" value={category} onChangeText={setCategory} />
-      <TextInput 
-        style={[styles.input, styles.description]} 
-        placeholder="Description" 
-        value={description} 
-        onChangeText={setDescription} 
-        multiline 
+      <TextInput
+        style={[styles.input, styles.description]}
+        placeholder="Description"
+        value={description}
+        onChangeText={setDescription}
+        multiline
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleCreateEvent}>
-        <Text style={styles.buttonText}>Create</Text>
-      </TouchableOpacity>
+      <CustomPressable
+        title="Create Event"
+        onPress={handleCreateEvent}
+        style={{  width: "100%" }}
+      />
     </View>
   );
 };
@@ -82,18 +139,12 @@ const styles = StyleSheet.create({
     height: 80,
     textAlignVertical: "top",
   },
-  button: {
-    backgroundColor: "#007bff",
-    paddingVertical: 15,
-    borderRadius: 10,
-    marginTop: 10,
+  imagePreview: {
     width: "100%",
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 10,
+    resizeMode: "cover",
   },
 });
 

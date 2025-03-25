@@ -7,6 +7,7 @@ import {
   Image,
 } from 'react-native';
 
+// reusable text input
 const CustomTextInput = ({
   value,
   onChangeText,
@@ -15,7 +16,7 @@ const CustomTextInput = ({
   isPassword,
   keyboardType,
 }) => {
-  const [isSecure, setIsSecure] = useState(secureTextEntry);
+  const [isSecure, setIsSecure] = useState(secureTextEntry); // State to control password visibility
 
   return (
     <View style={styles.container}>
@@ -23,7 +24,7 @@ const CustomTextInput = ({
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        secureTextEntry={isPassword ? isSecure : false}
+        secureTextEntry={isPassword ? isSecure : false} // Hides text if it's a password input
         style={styles.input}
         placeholderTextColor="black"
         borderColor="black"

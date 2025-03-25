@@ -1,6 +1,7 @@
 import React from 'react';
 import {Pressable, Text, StyleSheet, View, Image} from 'react-native';
 
+// reusable button 
 const CustomPressable = ({title, onPress, style, textStyle, icon}) => {
   return (
     <Pressable

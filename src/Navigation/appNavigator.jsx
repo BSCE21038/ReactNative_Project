@@ -16,22 +16,23 @@ import RegistrationScreen from "../Screens/RegistrationsScreen";
 import WishlistScreen from "../Screens/WishListScreen";
 import YourEventsScreen from "../Screens/YourEventsScreen";
 import AttendeeDetailsScreen from "../Screens/AttendeeDetailsScreen";
-import CreateEventScreen from "../Screens/createEventScreen"; // Organizer Feature
-import ManageEventsScreen from "../Screens/manageEventScreen"; // Organizer Feature
+import CreateEventScreen from "../Screens/createEventScreen"; 
+import ManageEventsScreen from "../Screens/manageEventScreen"; 
 
+// Create a stack navigator instance
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
-  const [initialRoute, setInitialRoute] = useState("Welcome");
+  const [initialRoute, setInitialRoute] = useState("Welcome"); // State to set the initial screen
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        if (userDoc.exists()) {
-          const userRole = userDoc.data().role;
-          setInitialRoute(userRole === "organizer" ? "OrganizerHome" : "MainApp");
+      if (user) { // If user is logged in.
+        const userDoc = await getDoc(doc(db, "users", user.uid)); // Fetch user role from Firestore
+        if (userDoc.exists()) { // Check if user data exists
+          const userRole = userDoc.data().role; // Extract the role
+          setInitialRoute(userRole === "organizer" ? "OrganizerHome" : "MainApp"); // Navigate based on role
         }
       }
       setLoading(false);
