@@ -130,6 +130,7 @@ export default function SignInScreen({ navigation }) {
         onChangeText={setPassword}
         placeholder="Password"
         secureTextEntry
+        isPassword
       />
 
       <CustomPressable title="LOG IN" onPress={handleEmailSignIn} />

@@ -128,6 +128,7 @@ export default StyleSheet.create({
   },
   checkedBox: {
     backgroundColor: '#6A5ACD',
+    zIndex:3,
   },
   checkmark: {
     color: 'white',
