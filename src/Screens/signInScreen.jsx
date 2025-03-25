@@ -12,7 +12,8 @@ import CustomPressable from "../Components/CustomPressable";
 import CustomTextInput from "../Components/CustomTextInput";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
-import { auth, WEB_CLIENT_ID } from "../../firebaseConfig";
+import { auth, WEB_CLIENT_ID, db } from "../../firebaseConfig";
+import { getDoc, doc } from "firebase/firestore";
 import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
@@ -38,9 +39,21 @@ export default function SignInScreen({ navigation }) {
   // Email/Password Sign-In
   const handleEmailSignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then(() => navigation.replace("MainApp"))
+      .then(async (userCredential) => {
+        const user = userCredential.user;
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+  
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          const userRole = userData.role;
+  
+          // Navigate based on role
+          navigation.replace(userRole === "organizer" ? "OrganizerHome" : "MainApp");
+        }
+      })
       .catch((error) => Alert.alert("Login Error", error.message));
   };
+  
 
   // Google Sign-In
   const handleGoogleSignIn = async () => {

@@ -43,26 +43,31 @@ export default function SignUpScreen() {
     const userDoc = {
       name: customName || user.displayName || "",
       email: user.email,
-      role: role,
+      role: role,  // Store role in Firestore
     };
     await setDoc(doc(db, "users", user.uid), userDoc);
-  };
+  };  
 
   // Email/Password Sign-Up
   const handleEmailSignUp = () => {
-    if (!isChecked) {
-      Alert.alert(
-        "Privacy Policy",
-        "Please accept the Privacy Policy before proceeding."
-      );
+    if (!isChecked || !role) {
+      Alert.alert("Error", "Please select a role and accept the privacy policy.");
       return;
     }
+  
     createUserWithEmailAndPassword(auth, email, password)
-      .then(async (userCredential) => {
-        await saveUserToFirestore(userCredential.user, name);
-        navigation.navigate("MainApp");
-      })
-      .catch((error) => Alert.alert("Sign-Up Error", error.message));
+    .then(async (userCredential) => {
+      const user = userCredential.user;
+      await setDoc(doc(db, "users", user.uid), {
+        name,
+        email,
+        role,  // Store user role
+      });
+
+      // Navigate based on role
+      navigation.replace(role === "organizer" ? "OrganizerHome" : "MainApp");
+    })
+    .catch((error) => Alert.alert("Sign-Up Error", error.message));
   };
 
   // Google Sign-Up
