@@ -13,7 +13,6 @@ import { useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const { width, height } = Dimensions.get('window');
 
 const EventDetailScreen = ({ navigation }) => {
   const route = useRoute();
@@ -22,22 +21,22 @@ const EventDetailScreen = ({ navigation }) => {
   const [saved, setSaved] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
-  const saveEventToWishlist = async (event) => {
-    try {
-      const existingEvents = await AsyncStorage.getItem('wishlist');
-      let wishlist = existingEvents ? JSON.parse(existingEvents) : [];
+  // const saveEventToWishlist = async (event) => {
+  //   try {
+  //     const existingEvents = await AsyncStorage.getItem('wishlist');
+  //     let wishlist = existingEvents ? JSON.parse(existingEvents) : [];
       
-      // Check if event is already saved
-      const eventExists = wishlist.some((e) => e.id === event.id);
+  //     // Check if event is already saved
+  //     const eventExists = wishlist.some((e) => e.id === event.id);
       
-      if (!eventExists) {
-        wishlist.push(event);
-        await AsyncStorage.setItem('wishlist', JSON.stringify(wishlist));
-      }
-    } catch (error) {
-      console.log('Error saving event:', error);
-    }
-  };
+  //     if (!eventExists) {
+  //       wishlist.push(event);
+  //       await AsyncStorage.setItem('wishlist', JSON.stringify(wishlist));
+  //     }
+  //   } catch (error) {
+  //     console.log('Error saving event:', error);
+  //   }
+  // };
 
   const toggleSave = async () => {
     try {

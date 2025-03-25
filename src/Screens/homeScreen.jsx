@@ -109,7 +109,7 @@ Shop, eat, and celebrate at Mashion Bazaar! Mark your calendars for an unforgett
   },
 ];
 
-// Helper function to filter upcoming events within 15 days
+// function to filter upcoming events within 15 days
 const filterUpcomingEvents = () => {
   const today = new Date();
   const fifteenDaysLater = new Date();
@@ -143,7 +143,6 @@ const HomeScreen = () => {
     }
   };
 
-  // Function to filter events based on search & filters
   // Function to filter events based on search & filters
   const filterEvents = query => {
     setSearchQuery(query);
