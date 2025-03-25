@@ -8,6 +8,7 @@ import ProfileScreen from '../Screens/profileScreen';
 import YourEventScreen from '../Screens/YourEventsScreen';
 import WishlistScreen from '../Screens/WishListScreen';
 
+// Create a bottom tab navigator instance
 const Tab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
@@ -23,7 +24,7 @@ const MainTabNavigator = () => {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#007bff',
+        tabBarActiveTintColor: '#DC143C',
         tabBarInactiveTintColor: 'gray',
       })}
     >

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 
+// reusable card
 const CustomDropdown = ({selectedValue, onValueChange}) => {
   return (
     <View style={styles.container}>

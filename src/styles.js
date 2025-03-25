@@ -235,6 +235,11 @@ export default StyleSheet.create({
     marginVertical: 5,
     paddingHorizontal: 10, // Adds padding for better readability
   },
+  centeredRow: {
+    justifyContent: "center",
+    alignItems: "center",
 
+  },
+  
   
 });

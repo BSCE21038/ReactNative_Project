@@ -1,14 +1,18 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
-
+// reusable card
 const CustomCard = ({title, subtext, imagePath, backgroundColor, onPress}) => {
   return (
     <View style={[styles.card, {backgroundColor}]}>
-      <Image source={imagePath} style={styles.image} />
+      <Image source={imagePath} style={styles.image} />{' '}
+      {/*  Displays an image inside the card. */}
       <Text style={styles.text} numberOfLines={2} ellipsizeMode="tail">
+        {' '}
+        {/* truncated after 2 lines if too long*/}
         {title}
       </Text>
-      {subtext ? <Text style={styles.subtext}>{subtext}</Text> : null}
+      {subtext ? <Text style={styles.subtext}>{subtext}</Text> : null}{' '}
+      {/* Displays subtext only if provided */}
       <TouchableOpacity style={styles.startButton} onPress={onPress}>
         <Text style={styles.startButtonText}>Start</Text>
       </TouchableOpacity>
