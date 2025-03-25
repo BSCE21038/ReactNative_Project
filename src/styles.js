@@ -52,7 +52,7 @@ export default StyleSheet.create({
     fontSize: 28,
     fontWeight: "bold",
     textAlign: "center",
-    marginTop: 150, // Increase this to add space
+    marginTop: 120, // Increase this to add space
     color: "#000",
   },
   loginText: {

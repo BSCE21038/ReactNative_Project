@@ -112,7 +112,12 @@ export default function SignUpScreen() {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ImageBackground source={require("../../assets/Mask.png")} style={styles.container}>
         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1 }}>
-          <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
+            <ScrollView 
+            contentContainerStyle={{ flexGrow: 1 }} 
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}  // Hides vertical scrollbar
+            showsHorizontalScrollIndicator={false} // Hides horizontal scrollbar
+          >
             <View style={{ flex: 1, justifyContent: "center", paddingHorizontal: 20 }}>
               <Icon name="arrow-back" size={30} color="#6A5ACD" style={styles.backIcon} onPress={handleBack} />
               <Image source={require("../../assets/logo.png")} style={styles.logo1} />
