@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '78%',
     color: 'black',
+    flex: 1,
   },
 });
 

@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 10,
     borderWidth: 2,
-    width: '80%',
+    width: '90%',
+    alignSelf:"center",
   },
   content: {
     flexDirection: 'row',
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   pressedButton: {
-    backgroundColor: '#0056b3',
+    backgroundColor: "white",
   },
   icon: {
     width: 25,

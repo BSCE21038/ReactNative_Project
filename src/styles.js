@@ -4,6 +4,23 @@ export default StyleSheet.create({
   container1: {
     flex:1,
   },
+  firstScreen: {
+    width: "100%",
+    height: "100%",  // Fix overflow issue
+    resizeMode: "cover",
+  },
+  logoContainer: {
+    position: "absolute",
+    top: "50%",  // Center vertically
+    left: "50%", // Center horizontally
+    transform: [{ translateX: -120 }, { translateY: -100 }], // Adjust properly
+    zIndex: 2,
+  },
+  firstLogo: {
+    width: 250, // Increase size
+    height: 130, // Make it taller for visibility
+    
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -26,16 +43,17 @@ export default StyleSheet.create({
   // },
   logo1: {
     zIndex: 3,
+    alignSelf:"center",
     position: 'absolute',
-    top: 16,
+    top: 10,
     resizeMode: 'contain',
   },
   mainHeading: {
-    zIndex: 1,
-    fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginTop: 90,
+    fontSize: 28,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 150, // Increase this to add space
+    color: "#000",
   },
   loginText: {
     fontSize: 16,
@@ -49,6 +67,7 @@ export default StyleSheet.create({
     fontSize: 16,
     color: 'black',
     marginVertical: 15,
+    alignSelf:"center",
   },
   forgotPasswordText: {
     fontSize: 16,
@@ -56,7 +75,7 @@ export default StyleSheet.create({
     marginTop: 10,
   },
   privacyPolicyLink: {
-    fontSize: 14,
+    fontSize: 12,
     marginBottom: -3,
     color: '#5669FF',
     fontWeight: 'bold',
@@ -91,9 +110,9 @@ export default StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 10,
-    width: '80%',
+    width: '100%',
     height: '8%',
-    alignItems: 'center',
+    alignSelf: 'center',
     justifyContent: 'center',
     marginVertical: 10,
   },
@@ -123,7 +142,7 @@ export default StyleSheet.create({
     marginLeft: 150,
   },
   checkboxText: {
-    fontSize: 18,
+    fontSize: 15,
     color: 'black',
   },
   checkedBox: {
@@ -138,7 +157,7 @@ export default StyleSheet.create({
   backIcon: {
     position: 'absolute',
     top: 50,
-    left: 20,
+    left: 10,
     zIndex: 10,
     color: 'black',
   },

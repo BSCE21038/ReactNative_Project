@@ -1,6 +1,5 @@
-// welcomeScreen.jsx
 import React, { useEffect } from "react";
-import { ImageBackground, Image, TouchableOpacity } from "react-native";
+import { ImageBackground, Image, TouchableOpacity, View } from "react-native";
 import styles from "../styles";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../../firebaseConfig";
@@ -24,10 +23,19 @@ export default function WelcomeScreen() {
       style={styles.container}
       onPress={() => navigation.navigate("SignIn")}
     >
+      {/* Background Image */}
       <Image
-        source={require("../../assets/welcome_bg.png")}
+        source={require("../../assets/mainScreen.png")}
         style={styles.firstScreen}
       />
+
+      {/* Logo Positioned on Top */}
+      <View style={styles.logoContainer}>
+        <Image
+          source={require("../../assets/white_logo.png")}
+          style={styles.firstLogo}
+        />
+      </View>
     </TouchableOpacity>
   );
 }

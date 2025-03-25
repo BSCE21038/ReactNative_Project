@@ -1,4 +1,3 @@
-// signUpScreen.jsx
 import React, { useState, useCallback } from "react";
 import {
   Text,
@@ -7,6 +6,11 @@ import {
   TouchableOpacity,
   Alert,
   View,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
+  ScrollView,
 } from "react-native";
 import styles from "../styles";
 import CustomPressable from "../Components/CustomPressable";
@@ -25,7 +29,6 @@ import { doc, setDoc } from "firebase/firestore";
 import { GoogleSignin, statusCodes } from "@react-native-google-signin/google-signin";
 import { LoginManager, AccessToken } from "react-native-fbsdk-next";
 
-// Configure Google Sign-In with your webClientId.
 GoogleSignin.configure({
   webClientId: WEB_CLIENT_ID,
 });
@@ -38,17 +41,15 @@ export default function SignUpScreen() {
   const [isChecked, setIsChecked] = useState(false);
   const [role, setRole] = useState("");
 
-  // Save user data to Firestore
   const saveUserToFirestore = async (user, customName = "") => {
     const userDoc = {
       name: customName || user.displayName || "",
       email: user.email,
-      role: role,  // Store role in Firestore
+      role: role,  
     };
     await setDoc(doc(db, "users", user.uid), userDoc);
-  };  
+  };
 
-  // Email/Password Sign-Up
   const handleEmailSignUp = () => {
     if (!isChecked || !role) {
       Alert.alert("Error", "Please select a role and accept the privacy policy.");
@@ -56,21 +57,19 @@ export default function SignUpScreen() {
     }
   
     createUserWithEmailAndPassword(auth, email, password)
-    .then(async (userCredential) => {
-      const user = userCredential.user;
-      await setDoc(doc(db, "users", user.uid), {
-        name,
-        email,
-        role,  // Store user role
-      });
+      .then(async (userCredential) => {
+        const user = userCredential.user;
+        await setDoc(doc(db, "users", user.uid), {
+          name,
+          email,
+          role,  
+        });
 
-      // Navigate based on role
-      navigation.replace(role === "organizer" ? "OrganizerHome" : "MainApp");
-    })
-    .catch((error) => Alert.alert("Sign-Up Error", error.message));
+        navigation.replace(role === "organizer" ? "OrganizerHome" : "MainApp");
+      })
+      .catch((error) => Alert.alert("Sign-Up Error", error.message));
   };
 
-  // Google Sign-Up
   const handleGoogleSignUp = async () => {
     try {
       await GoogleSignin.hasPlayServices();
@@ -89,31 +88,18 @@ export default function SignUpScreen() {
     }
   };
 
-  // Facebook Sign-Up
   const handleFacebookSignUp = async () => {
     try {
-      const result = await LoginManager.logInWithPermissions([
-        "public_profile",
-        "email",
-      ]);
+      const result = await LoginManager.logInWithPermissions(["public_profile", "email"]);
       if (result.isCancelled) {
         Alert.alert("Facebook Sign-In Cancelled");
         return;
       }
       const data = await AccessToken.getCurrentAccessToken();
-      if (!data)
-        throw new Error("Facebook Sign-In failed to get access token");
-      const facebookCredential = FacebookAuthProvider.credential(
-        data.accessToken
-      );
-      const userCredential = await signInWithCredential(
-        auth,
-        facebookCredential
-      );
-      await saveUserToFirestore(
-        userCredential.user,
-        userCredential.user.displayName
-      );
+      if (!data) throw new Error("Facebook Sign-In failed to get access token");
+      const facebookCredential = FacebookAuthProvider.credential(data.accessToken);
+      const userCredential = await signInWithCredential(auth, facebookCredential);
+      await saveUserToFirestore(userCredential.user, userCredential.user.displayName);
       navigation.navigate("MainApp");
     } catch (error) {
       Alert.alert("Facebook Sign-In Error", error.message);
@@ -123,74 +109,48 @@ export default function SignUpScreen() {
   const handleBack = useCallback(() => navigation.goBack(), [navigation]);
 
   return (
-    <ImageBackground
-      source={require("../../assets/Mask.png")}
-      style={styles.container}
-    >
-      <Icon
-        name="arrow-back"
-        size={30}
-        color="#6A5ACD"
-        style={styles.backIcon}
-        onPress={handleBack}
-      />
-      <Image source={require("../../assets/logo.png")} style={styles.logo1} />
-      <Text style={styles.mainHeading}>Create Your Account</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <ImageBackground source={require("../../assets/Mask.png")} style={styles.container}>
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1 }}>
+          <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
+            <View style={{ flex: 1, justifyContent: "center", paddingHorizontal: 20 }}>
+              <Icon name="arrow-back" size={30} color="#6A5ACD" style={styles.backIcon} onPress={handleBack} />
+              <Image source={require("../../assets/logo.png")} style={styles.logo1} />
+              <Text style={styles.mainHeading}>Create Your Account</Text>
 
-      {/* Social Sign-Up Options */}
-      <CustomPressable
-        title="CONTINUE WITH FACEBOOK"
-        icon={require("../../assets/Vector.png")}
-        onPress={handleFacebookSignUp}
-      />
-      <CustomPressable
-        title="CONTINUE WITH GOOGLE"
-        icon={require("../../assets/Group6795.png")}
-        onPress={handleGoogleSignUp}
-      />
+              {/* Social Sign-Up Options */}
+              <CustomPressable title="CONTINUE WITH FACEBOOK" icon={require("../../assets/Vector.png")} onPress={handleFacebookSignUp} />
+              <CustomPressable title="CONTINUE WITH GOOGLE" icon={require("../../assets/Group6795.png")} onPress={handleGoogleSignUp} />
 
-      <Text style={styles.orText}>OR SIGN UP WITH EMAIL</Text>
+              <Text style={styles.orText}>OR SIGN UP WITH EMAIL</Text>
 
-      <CustomTextInput value={name} onChangeText={setName} placeholder="Name" />
-      <CustomTextInput
-        value={email}
-        onChangeText={setEmail}
-        placeholder="Email Address"
-      />
-      <CustomTextInput
-        value={password}
-        onChangeText={setPassword}
-        placeholder="Password"
-        secureTextEntry
-        isPassword
-      />
+              <CustomTextInput value={name} onChangeText={setName} placeholder="Name" />
+              <CustomTextInput value={email} onChangeText={setEmail} placeholder="Email Address" />
+              <CustomTextInput value={password} onChangeText={setPassword} placeholder="Password" secureTextEntry isPassword />
 
-      {/* Optional: Role selection dropdown */}
-      <View>
-        <CustomDropdown
-          selectedValue={role}
-          onValueChange={(itemValue) => setRole(itemValue)}
-        />
-      </View>
+              {/* Role selection dropdown */}
+              <View>
+                <CustomDropdown selectedValue={role} onValueChange={(itemValue) => setRole(itemValue)} />
+              </View>
 
-      {/* Privacy Policy Checkbox */}
-      <View style={styles.checkboxContainer}>
-        <Text style={styles.checkboxText}>
-          I have read the{" "}
-          <TouchableOpacity
-            onPress={() => console.log("Privacy Policy Clicked")}
-          >
-            <Text style={styles.privacyPolicyLink}>Privacy Policy</Text>
-          </TouchableOpacity>
-        </Text>
-        <TouchableOpacity
-          style={[styles.checkbox, isChecked && styles.checkedBox]}
-          onPress={() => setIsChecked(!isChecked)}
-        >
-          {isChecked && <Text style={styles.checkmark}>✔</Text>}
-        </TouchableOpacity>
-      </View>
-      <CustomPressable title="SIGN UP" onPress={handleEmailSignUp} />
-    </ImageBackground>
+              {/* Privacy Policy Checkbox */}
+              <View style={styles.checkboxContainer}>
+                <Text style={styles.checkboxText}>
+                  I have read the{" "}
+                  <TouchableOpacity onPress={() => console.log("Privacy Policy Clicked")}>
+                    <Text style={styles.privacyPolicyLink}>Privacy Policy</Text>
+                  </TouchableOpacity>
+                </Text>
+                <TouchableOpacity style={[styles.checkbox, isChecked && styles.checkedBox]} onPress={() => setIsChecked(!isChecked)}>
+                  {isChecked && <Text style={styles.checkmark}>✔</Text>}
+                </TouchableOpacity>
+              </View>
+
+              <CustomPressable title="SIGN UP" onPress={handleEmailSignUp} />
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </ImageBackground>
+    </TouchableWithoutFeedback>
   );
 }
