@@ -25,7 +25,7 @@ export default function WelcomeScreen() {
       Animated.sequence([
         Animated.timing(translateY, {
           toValue: -10, // Move up visibly
-          duration: 1500, // Smooth speed
+          duration: 2000, // Smooth speed
           easing: Easing.inOut(Easing.ease), // Soft and smooth transition
           useNativeDriver: true,
         }),
