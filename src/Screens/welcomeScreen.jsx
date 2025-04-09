@@ -7,7 +7,7 @@ import { onAuthStateChanged } from "firebase/auth";
 
 export default function WelcomeScreen() {
   const navigation = useNavigation();
-  const translateY = useRef(new Animated.Value(0)).current;
+  const bounceAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -19,25 +19,22 @@ export default function WelcomeScreen() {
     return () => unsubscribe();
   }, [navigation]);
 
-  useEffect(() => {
-    // Create a visible floating animation with smooth transitions
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(translateY, {
-          toValue: -10, // Move up visibly
-          duration: 2000, // Smooth speed
-          easing: Easing.inOut(Easing.ease), // Soft and smooth transition
-          useNativeDriver: true,
-        }),
-        Animated.timing(translateY, {
-          toValue: 10, // Move down visibly
-          duration: 2000, // Smooth speed
-          easing: Easing.inOut(Easing.ease), // Soft and smooth transition
-          useNativeDriver: true,
-        }),
-      ])
-    ).start();
-  }, []);
+    useEffect(() => {
+        Animated.loop(
+            Animated.sequence([
+                Animated.timing(bounceAnim, {
+                    toValue: -10, // Move up
+                    duration: 1500,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(bounceAnim, {
+                    toValue: 0, // Move down
+                    duration: 1500,
+                    useNativeDriver: true,
+                }),
+            ])
+        ).start();
+    }, []);
 
   return (
     <TouchableOpacity
@@ -49,12 +46,10 @@ export default function WelcomeScreen() {
         source={require("../../assets/mainScreen.png")}
         style={styles.firstScreen}
       />
-
-      {/* Animated Logo */}
       <View style={styles.logoContainer}>
-        <Animated.Image
+        <Animated.Image 
           source={require("../../assets/white_logo.png")}
-          style={[styles.firstLogo, { transform: [{ translateY }] }]}
+          style={[styles.firstLogo, { transform: [{ translateY: bounceAnim }] }]} 
         />
       </View>
     </TouchableOpacity>
