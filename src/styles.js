@@ -2,24 +2,23 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   container1: {
-    flex:1,
+    flex: 1,
   },
   firstScreen: {
-    width: "100%",
-    height: "100%",  // Fix overflow issue
-    resizeMode: "cover",
+    width: '100%',
+    height: '100%', // Fix overflow issue
+    resizeMode: 'cover',
   },
   logoContainer: {
-    position: "absolute",
-    top: "50%",  // Center vertically
-    left: "50%", // Center horizontally
-    transform: [{ translateX: -120 }, { translateY: -100 }], // Adjust properly
+    position: 'absolute',
+    top: '50%', // Center vertically
+    left: '50%', // Center horizontally
+    transform: [{translateX: -120}, {translateY: -100}], // Adjust properly
     zIndex: 2,
   },
   firstLogo: {
     width: 250, // Increase size
     height: 130, // Make it taller for visibility
-    
   },
   container: {
     flex: 1,
@@ -28,7 +27,7 @@ export default StyleSheet.create({
     width: '100%',
     height: '100%',
     borderRadius: 10,
-    zIndex:3,
+    zIndex: 3,
   },
   loginContainer: {
     flexDirection: 'row',
@@ -43,17 +42,17 @@ export default StyleSheet.create({
   // },
   logo1: {
     zIndex: 3,
-    alignSelf:"center",
+    alignSelf: 'center',
     position: 'absolute',
     top: 10,
     resizeMode: 'contain',
   },
   mainHeading: {
     fontSize: 28,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
     marginTop: 120, // Increase this to add space
-    color: "#000",
+    color: '#000',
   },
   loginText: {
     fontSize: 16,
@@ -67,7 +66,7 @@ export default StyleSheet.create({
     fontSize: 16,
     color: 'black',
     marginVertical: 15,
-    alignSelf:"center",
+    alignSelf: 'center',
   },
   forgotPasswordText: {
     fontSize: 16,
@@ -147,7 +146,7 @@ export default StyleSheet.create({
   },
   checkedBox: {
     backgroundColor: '#6A5ACD',
-    zIndex:3,
+    zIndex: 3,
   },
   checkmark: {
     color: 'white',
@@ -236,10 +235,25 @@ export default StyleSheet.create({
     paddingHorizontal: 10, // Adds padding for better readability
   },
   centeredRow: {
-    justifyContent: "center",
-    alignItems: "center",
-
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  
-  
+
+  heading: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  description: {
+    height: 80,
+    textAlignVertical: 'top',
+  },
+  imagePreview: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 10,
+    resizeMode: 'cover',
+  },
 });

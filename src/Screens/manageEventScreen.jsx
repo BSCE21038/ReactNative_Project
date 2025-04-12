@@ -1,9 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, TouchableOpacity, Alert, StyleSheet } from "react-native";
-import { db, auth } from "../../firebaseConfig";
-import { collection, query, where, getDocs, deleteDoc, doc } from "firebase/firestore";
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Alert,
+  StyleSheet,
+} from 'react-native';
+import {db, auth} from '../../firebaseConfig';
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  deleteDoc,
+  doc,
+} from 'firebase/firestore';
 
-const ManageEventsScreen = ({ navigation }) => {
+const ManageEventsScreen = ({navigation}) => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
@@ -12,35 +26,42 @@ const ManageEventsScreen = ({ navigation }) => {
 
   const fetchEvents = async () => {
     try {
-      const eventsQuery = query(collection(db, "events"), where("createdBy", "==", auth.currentUser.uid));
+      const eventsQuery = query(
+        collection(db, 'events'),
+        where('createdBy', '==', auth.currentUser.uid),
+      ); //Filter createdBy equals user's UID
       const querySnapshot = await getDocs(eventsQuery);
-      const eventsList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const eventsList = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
       setEvents(eventsList);
     } catch (error) {
-      Alert.alert("Error", "Failed to fetch events.");
+      Alert.alert('Error', 'Failed to fetch events.');
     }
   };
 
-  const handleDeleteEvent = async (eventId) => {
+  const handleDeleteEvent = async eventId => {
     try {
-      await deleteDoc(doc(db, "events", eventId));
+      await deleteDoc(doc(db, 'events', eventId));
       setEvents(events.filter(event => event.id !== eventId));
-      Alert.alert("Success", "Event deleted successfully!");
+      Alert.alert('Success', 'Event deleted successfully!');
     } catch (error) {
-      Alert.alert("Error", "Failed to delete event.");
+      Alert.alert('Error', 'Failed to delete event.');
     }
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({item}) => (
     <View style={styles.eventCard}>
       <Text style={styles.eventTitle}>{item.title}</Text>
-      <Text style={styles.eventInfo}>{item.date} - {item.location}</Text>
+      <Text style={styles.eventInfo}>
+        {item.date} - {item.location}
+      </Text>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity 
-          style={[styles.button, styles.deleteButton]} 
-          onPress={() => handleDeleteEvent(item.id)}
-        >
+        <TouchableOpacity
+          style={[styles.button, styles.deleteButton]}
+          onPress={() => handleDeleteEvent(item.id)}>
           <Text style={styles.buttonText}>Delete</Text>
         </TouchableOpacity>
       </View>
@@ -50,10 +71,10 @@ const ManageEventsScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Manage My Events</Text>
-      
+
       <FlatList
         data={events}
-        keyExtractor={(item) => item.id}
+        keyExtractor={item => item.id}
         renderItem={renderItem}
       />
     </View>
@@ -64,32 +85,32 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   heading: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 20,
-    textAlign: "center",
+    textAlign: 'center',
   },
   eventCard: {
-    backgroundColor: "#f8f9fa",
+    backgroundColor: '#f8f9fa',
     padding: 15,
     borderRadius: 10,
     marginBottom: 10,
   },
   eventTitle: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   eventInfo: {
     fontSize: 14,
-    color: "gray",
+    color: 'gray',
     marginBottom: 10,
   },
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   button: {
     paddingVertical: 10,
@@ -97,12 +118,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   deleteButton: {
-    backgroundColor: "red",
+    backgroundColor: 'red',
   },
   buttonText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 14,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
 });
 

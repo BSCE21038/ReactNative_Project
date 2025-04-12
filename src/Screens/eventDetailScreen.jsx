@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -9,60 +9,43 @@ import {
   Share,
   Dimensions,
 } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-const EventDetailScreen = ({ navigation }) => {
+const EventDetailScreen = ({navigation}) => {
   const route = useRoute();
-  const { event } = route.params;
+  const {event} = route.params;
 
   const [saved, setSaved] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
-  // const saveEventToWishlist = async (event) => {
-  //   try {
-  //     const existingEvents = await AsyncStorage.getItem('wishlist');
-  //     let wishlist = existingEvents ? JSON.parse(existingEvents) : [];
-      
-  //     // Check if event is already saved
-  //     const eventExists = wishlist.some((e) => e.id === event.id);
-      
-  //     if (!eventExists) {
-  //       wishlist.push(event);
-  //       await AsyncStorage.setItem('wishlist', JSON.stringify(wishlist));
-  //     }
-  //   } catch (error) {
-  //     console.log('Error saving event:', error);
-  //   }
-  // };
-
+  //function to save/unsave in wishlist
   const toggleSave = async () => {
     try {
       const existingEvents = await AsyncStorage.getItem('wishlist');
-      let wishlist = existingEvents ? JSON.parse(existingEvents) : [];
-  
+      let wishlist = existingEvents ? JSON.parse(existingEvents) : []; //parse the save events
+
       // Check if the event is already saved
-      const eventExists = wishlist.some((e) => e.id === event.id);
-  
+      const eventExists = wishlist.some(e => e.id === event.id);
+
       if (eventExists) {
         // Remove event from wishlist
-        wishlist = wishlist.filter((e) => e.id !== event.id);
+        wishlist = wishlist.filter(e => e.id !== event.id);
         setSaved(false);
       } else {
         // Add event to wishlist
         wishlist.push(event);
         setSaved(true);
       }
-  
+
       await AsyncStorage.setItem('wishlist', JSON.stringify(wishlist));
     } catch (error) {
       console.log('Error updating wishlist:', error);
     }
   };
-  
 
+  // share event details using device's share sheet
   const handleShare = async () => {
     try {
       await Share.share({
@@ -83,13 +66,13 @@ const EventDetailScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-    <Icon
-      name="arrow-back"
-      size={30}
-      color="#6A5ACD"
-      style={styles.backIcon}
-      onPress={() => navigation.goBack()}
-    />
+      <Icon
+        name="arrow-back"
+        size={30}
+        color="#6A5ACD"
+        style={styles.backIcon}
+        onPress={() => navigation.goBack()}
+      />
       {/* Sticky Event Image */}
       <View style={styles.stickyImageContainer}>
         <Image source={event.image} style={styles.eventImage} />
@@ -111,9 +94,9 @@ const EventDetailScreen = ({ navigation }) => {
               <Icon name="event" size={20} color="#FF6F61" />
               <Text style={styles.organizerText}>{event.category} Event</Text>
             </View>
-            <TouchableOpacity style={styles.followButton}>
+            {/* <TouchableOpacity style={styles.followButton}>
               <Text style={styles.followText}>Follow</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           <View style={styles.detailsRow}>
@@ -131,7 +114,9 @@ const EventDetailScreen = ({ navigation }) => {
           </View>
 
           <Text style={styles.description}>
-            {expanded ? event.description : `${event.description.substring(0, 180)}...`}
+            {expanded
+              ? event.description
+              : `${event.description.substring(0, 180)}...`}
             <TouchableOpacity onPress={() => setExpanded(!expanded)}>
               <Text style={styles.readMoreText}>
                 {expanded ? 'Read Less' : 'Read More'}
@@ -143,9 +128,9 @@ const EventDetailScreen = ({ navigation }) => {
 
       {/* Bottom Buttons */}
       <View style={styles.bottomButtons}>
-        <TouchableOpacity style={styles.registerButton} 
-        onPress={() => navigation.navigate('Registration', { event })}
-        >
+        <TouchableOpacity
+          style={styles.registerButton}
+          onPress={() => navigation.navigate('Registration', {event})}>
           <Text style={styles.registerText}>Register Now</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.shareButton} onPress={handleShare}>
@@ -168,10 +153,10 @@ const styles = StyleSheet.create({
     left: 20,
     zIndex: 10,
     color: 'black',
-    zIndex:100,
+    zIndex: 100,
     backgroundColor: 'rgba(255, 255, 255, 0.6)',
     borderRadius: 30,
-    padding:8,
+    padding: 8,
   },
   stickyImageContainer: {
     position: 'absolute',
