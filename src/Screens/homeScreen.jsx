@@ -17,7 +17,7 @@ import styles from '../styles';
 
 // Updated categories with "All"
 const categories = [
-  {id: '0', name: 'All', icon: 'apps', color: '#333333'}, // "All" category added
+  {id: '0', name: 'All', icon: 'apps', color: '#333333'},
   {id: '1', name: 'Art', icon: 'color-palette', color: '#FF6F61'},
   {id: '2', name: 'Music', icon: 'musical-notes', color: '#FFD700'},
   {id: '3', name: 'Food', icon: 'fast-food', color: '#4CAF50'},
@@ -54,7 +54,7 @@ Mark your calendars and be part of the movement!`,
   {
     id: 'event2',
     title: 'Ramazaar - Chaand Raat',
-    date: '2025-03-30',
+    date: '2025-05-30',
     category: 'Food',
     city: 'Lahore',
     location: 'Model Town Community Center, Lahore',
@@ -62,7 +62,7 @@ Mark your calendars and be part of the movement!`,
     description: `Ramazaar returns this Chaand Raat for a night filled with shopping, food, and entertainment!  
 
 Location: Model Town Community Center, Lahore  
-Dates: March 30 – 31, 2025  
+Dates: April 30 – 31, 2025  
 Timings: 6:00 PM – Sehri  
 
 Event Highlights:  
@@ -78,7 +78,7 @@ Join us for a festive celebration like never before!`,
   {
     id: 'event3',
     title: 'Mashion Bazaar: Chaand Raat',
-    date: '2025-03-28',
+    date: '2025-04-18',
     category: 'Art',
     city: 'Lahore',
     location: 'Lahore Polo Club',
@@ -86,7 +86,7 @@ Join us for a festive celebration like never before!`,
     description: `Mashion Bazaar returns with a grand Chaand Raat celebration, blending fashion, food, and entertainment in a vibrant atmosphere.  
 
 Location: Lahore Polo Club  
-Dates: March 28 – 29, 2025  
+Dates: April 18 – 29, 2025  
 Timings: 5:00 PM – 12:00 AM  
 
 What’s in Store?  
@@ -116,7 +116,7 @@ const filterUpcomingEvents = () => {
   fifteenDaysLater.setDate(today.getDate() + 15);
 
   return allEvents.filter(event => {
-    const eventDate = new Date(event.date);
+    const eventDate = new Date(event.date); //convert string dates to Date
     return eventDate >= today && eventDate <= fifteenDaysLater;
   });
 };
@@ -139,7 +139,7 @@ const HomeScreen = () => {
       setUpcomingEvents(filterUpcomingEvents()); // Restore upcoming events when viewing all
     } else {
       setFilteredEvents(allEvents.filter(event => event.category === category));
-      setUpcomingEvents([]); // Hide upcoming events for category-specific views
+      setUpcomingEvents([]); // Hide upcoming events
     }
   };
 
@@ -148,16 +148,15 @@ const HomeScreen = () => {
     setSearchQuery(query);
 
     if (query.trim() === '') {
-      // If search bar is empty, restore original category-based filtering
+      // If search bar is empty, restore to category view
       filterByCategory(selectedCategory);
     } else {
-      // Search in all events, ignoring categories
+      //show matching title
       const filtered = allEvents.filter(event =>
         event.title.toLowerCase().includes(query.toLowerCase()),
       );
 
       setFilteredEvents(filtered);
-      // setUpcomingEvents([]); // Hide upcoming events during search
     }
   };
 
@@ -202,7 +201,7 @@ const HomeScreen = () => {
       <ImageBackground
         source={require('../../assets/blockScreen.png')}
         style={styles.topNav}>
-        <Ionicons name="menu" size={28} color="white" />
+        {/* <Ionicons name="menu" size={28} color="white" /> */}
         <View style={styles.searchBar}>
           <Ionicons name="search" size={20} color="gray" />
           <TextInput
@@ -225,7 +224,7 @@ const HomeScreen = () => {
           renderItem={renderCategory}
           keyExtractor={item => item.id}
           horizontal
-          showsHorizontalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false} //scrollable row
           style={styles.categoryList}
         />
 
@@ -247,7 +246,7 @@ const HomeScreen = () => {
             </>
           )}
 
-        {/* Filtered Events */}
+        {/* Section heading based on category selected */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>
             {selectedCategory === 'All'
@@ -255,6 +254,7 @@ const HomeScreen = () => {
               : `${selectedCategory} Events`}
           </Text>
         </View>
+        {/* Show filter events */}
         {filteredEvents.length > 0 ? (
           <FlatList
             data={filteredEvents}
