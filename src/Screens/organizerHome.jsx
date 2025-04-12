@@ -89,7 +89,7 @@ const OrganizerHome = () => {
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>My Created Events</Text>
         </View>
-        {/* {filteredEvents.length > 0 ? (
+        {filteredEvents.length > 0 ? (
           <FlatList
             data={filteredEvents}
             renderItem={renderEventCard}
@@ -101,7 +101,7 @@ const OrganizerHome = () => {
           <View style={styles.noResultsContainer}>
             <Text style={styles.noResultsText}>No events found</Text>
           </View>
-        )} */}
+        )}
         {/* Organizer Dashboard Buttons */}
         <View style={styles.dashboardActions}>
           <View style={styles.centeredRow}>
