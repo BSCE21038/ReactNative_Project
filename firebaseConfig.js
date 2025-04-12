@@ -45,7 +45,6 @@ const subscribeToAuthChanges = (onUserAuthenticated) => {
   });
 };
 
-// Replace with your actual Web Client ID from Firebase console.
 const WEB_CLIENT_ID =
   "637085183920-9tk68729hqp3vt2h5b8ad6di33ipafdj.apps.googleusercontent.com";
 

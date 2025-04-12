@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect, useRef} from "react";
 import {
   Text,
   Image,
+  Animated,
   ImageBackground,
   TouchableOpacity,
   Alert,
@@ -40,6 +41,7 @@ export default function SignUpScreen() {
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [role, setRole] = useState("");
+  const bounceAnim = useRef(new Animated.Value(0)).current;
 
   const saveUserToFirestore = async (user, customName = "") => {
     const userDoc = {
@@ -49,6 +51,23 @@ export default function SignUpScreen() {
     };
     await setDoc(doc(db, "users", user.uid), userDoc);
   };
+
+  useEffect(() => {
+          Animated.loop(
+              Animated.sequence([
+                  Animated.timing(bounceAnim, {
+                      toValue: -10, // Move up
+                      duration: 1500,
+                      useNativeDriver: true,
+                  }),
+                  Animated.timing(bounceAnim, {
+                      toValue: 0, // Move down
+                      duration: 1500,
+                      useNativeDriver: true,
+                  }),
+              ])
+          ).start();
+      }, []);
 
   const handleEmailSignUp = () => {
     if (!isChecked || !role) {
@@ -120,7 +139,10 @@ export default function SignUpScreen() {
           >
             <View style={{ flex: 1, justifyContent: "center", paddingHorizontal: 20 }}>
               <Icon name="arrow-back" size={30} color="#6A5ACD" style={styles.backIcon} onPress={handleBack} />
-              <Image source={require("../../assets/logo.png")} style={styles.logo1} />
+              <Animated.Image 
+                source={require("../../assets/logo.png")}
+                style={[styles.logo1, { transform: [{ translateY: bounceAnim }] }]} 
+              />
               <Text style={styles.mainHeading}>Create Your Account</Text>
 
               {/* Social Sign-Up Options */}

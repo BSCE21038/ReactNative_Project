@@ -159,7 +159,9 @@ const RegistrationScreen = ({ route, navigation }) => {
             )}
             ListFooterComponent={registrations.length > 0 && (
               <TouchableOpacity style={styles.confirmButton} onPress={confirmRegistration}>
-                <Text style={styles.confirmButtonText}>Confirm Registration</Text>
+                  <Text style={styles.confirmButtonText} numberOfLines={1} ellipsizeMode="tail">
+                  Confirm Registration
+                  </Text>
               </TouchableOpacity>
             )}
           />
@@ -243,7 +245,7 @@ const styles = StyleSheet.create({
   },
   confirmButtonText: {
     color: "white",
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: "bold",
   },
   registrationBox: {

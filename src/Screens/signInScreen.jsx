@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import {
   Text,
+  Animated,
   ImageBackground,
   Image,
   TouchableOpacity,
@@ -36,6 +37,7 @@ export default function SignInScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigateToSignUp = useCallback(() => navigation.navigate("SignUp"), [navigation]);
+  const bounceAnim = useRef(new Animated.Value(0)).current;
 
   const handleEmailSignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
@@ -50,6 +52,23 @@ export default function SignInScreen({ navigation }) {
       })
       .catch((error) => Alert.alert("Login Error", error.message));
   };
+
+  useEffect(() => {
+          Animated.loop(
+              Animated.sequence([
+                  Animated.timing(bounceAnim, {
+                      toValue: -10, // Move up
+                      duration: 1500,
+                      useNativeDriver: true,
+                  }),
+                  Animated.timing(bounceAnim, {
+                      toValue: 0, // Move down
+                      duration: 1500,
+                      useNativeDriver: true,
+                  }),
+              ])
+          ).start();
+      }, []);
 
   const handleGoogleSignIn = async () => {
     try {
@@ -84,8 +103,8 @@ export default function SignInScreen({ navigation }) {
         <ScrollView 
           contentContainerStyle={{ flexGrow: 1 }} 
           keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}  // Hides vertical scrollbar
-          showsHorizontalScrollIndicator={false} // Hides horizontal scrollbar
+          showsVerticalScrollIndicator={false}  
+          showsHorizontalScrollIndicator={false} 
         >
             <View style={{ flex: 1, justifyContent: "center", paddingHorizontal: 20 }}>
               <Icon
@@ -95,7 +114,10 @@ export default function SignInScreen({ navigation }) {
                 style={styles.backIcon}
                 onPress={() => navigation.goBack()}
               />
-              <Image source={require("../../assets/logo.png")} style={styles.logo1} />
+              <Animated.Image 
+                source={require("../../assets/logo.png")}
+                style={[styles.logo1, { transform: [{ translateY: bounceAnim }] }]} 
+              />
               <Text style={styles.mainHeading}>Welcome</Text>
 
               <CustomPressable
