@@ -13,7 +13,9 @@ import {
 import {useRoute} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import api, { HOST } from '../api'
+import api, { HOST } from '../api';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 const EventDetailScreen = ({navigation}) => {
   const route = useRoute();
@@ -21,6 +23,23 @@ const EventDetailScreen = ({navigation}) => {
 
   const [saved, setSaved] = useState(false);
   const [expanded, setExpanded] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      const checkIfSaved = async () => {
+        try {
+          const existingEvents = await AsyncStorage.getItem('wishlist');
+          const wishlist = existingEvents ? JSON.parse(existingEvents) : [];
+          const isSaved = wishlist.some(e => e.id === event.id);
+          setSaved(isSaved);
+        } catch (error) {
+          console.log('Error checking saved event:', error);
+        }
+      };
+  
+      checkIfSaved();
+    }, [event.id])
+  );
 
   //function to save/unsave in wishlist
   const toggleSave = async () => {

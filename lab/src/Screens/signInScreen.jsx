@@ -120,7 +120,7 @@ export default function SignInScreen({ navigation }) {
               />
               <Text style={styles.mainHeading}>Welcome</Text>
 
-              <CustomPressable
+              {/* <CustomPressable
                 title="CONTINUE WITH FACEBOOK"
                 onPress={handleFacebookSignIn}
                 style={styles.socialButton}
@@ -131,9 +131,9 @@ export default function SignInScreen({ navigation }) {
                 onPress={handleGoogleSignIn}
                 style={styles.socialButton}
                 icon={require("../../assets/Group6795.png")}
-              />
+              /> */}
 
-              <Text style={styles.orText}>OR LOG IN WITH EMAIL</Text>
+              <Text style={styles.orText}>LOG IN WITH EMAIL</Text>
 
               <CustomTextInput
                 value={email}

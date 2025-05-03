@@ -146,8 +146,8 @@ export default function SignUpScreen() {
               <Text style={styles.mainHeading}>Create Your Account</Text>
 
               {/* Social Sign-Up Options */}
-              <CustomPressable title="CONTINUE WITH FACEBOOK" icon={require("../../assets/Vector.png")} onPress={handleFacebookSignUp} />
-              <CustomPressable title="CONTINUE WITH GOOGLE" icon={require("../../assets/Group6795.png")} onPress={handleGoogleSignUp} />
+              {/* <CustomPressable title="CONTINUE WITH FACEBOOK" icon={require("../../assets/Vector.png")} onPress={handleFacebookSignUp} />
+              <CustomPressable title="CONTINUE WITH GOOGLE" icon={require("../../assets/Group6795.png")} onPress={handleGoogleSignUp} /> */}
 
               <Text style={styles.orText}>OR SIGN UP WITH EMAIL</Text>
 
